@@ -4,20 +4,43 @@ using UnityEngine;
 
 public class Moveyut : MonoBehaviour
 {
-    float rotSpeed = 1.0f;
-    float speed = 20.0f;
+    float rotSpeed = 20.0f;
+    bool isButton = false;
+    float t = 0;
 
     // Start is called before the first frame update
     void Start()
     {
-        
     }
 
     // Update is called once per frame
     void Update()
     {
-        float h = Input.GetAxis("Horizontal");
-        float v = Input.GetAxis("Vertical");
-        
+       
+        if (Input.GetMouseButtonDown(0))
+        {
+            isButton = true;
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        RotateYut();
+    }
+
+    void RotateYut()
+    {
+        if (!isButton)
+            return; 
+       
+        transform.Rotate(Vector3.up * rotSpeed);
+        t += Time.deltaTime;
+      
+        if (t >= Time.deltaTime * 50)
+        {
+            Debug.Log("Stop");
+            isButton = false;
+            t = 0;
+        }
     }
 }
