@@ -5,22 +5,20 @@ using System;
 
 public class Moveyut4 : MonoBehaviour
 {
+    public GameObject yut4;
     float rotSpeed = 20.0f;
     bool isButton = false;
     float t = 0;
-    Sprite yutObject;
-    Sprite yut2Image;
 
     // Start is called before the first frame update
     void Start()
     {
-        yutObject = gameObject.GetComponent<SpriteRenderer>().sprite;
+        yut4 = gameObject;
     }
 
     // Update is called once per frame
     void Update()
-    {
-
+    { 
         if (Input.GetMouseButtonDown(0))
         {
             isButton = true;
@@ -63,5 +61,4 @@ public class Moveyut4 : MonoBehaviour
         else // 도 개 걸 모
             this.gameObject.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("yut1");
     }
-
 }

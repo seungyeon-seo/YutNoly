@@ -5,16 +5,15 @@ using System;
 
 public class Moveyut3 : MonoBehaviour
 {
+    public GameObject yut3;
     float rotSpeed = 20.0f;
     bool isButton = false;
     float t = 0;
-    Sprite yutObject;
-    Sprite yut2Image;
 
     // Start is called before the first frame update
     void Start()
     {
-        yutObject = gameObject.GetComponent<SpriteRenderer>().sprite;
+        yut3 = gameObject;
     }
 
     // Update is called once per frame
