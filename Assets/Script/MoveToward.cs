@@ -68,9 +68,9 @@ public class MoveToward : MonoBehaviour
         /*        float frameSize = 1.4f;*/
         if (dict.GetPos(wasPos) < 0)
             Debug.Log("Error no Position!");
-        int ToStep = dict.GetPos(wasPos) + numberPressed;
-        Vector2 toPos = dict.Kans[ToStep];
-        Debug.Log("move to!"+ toPos.ToString());
+        int toStep = dict.GetPos(wasPos) + numberPressed;
+        Vector2 toPos = dict.Kans[toStep];
+        Debug.Log("move to!"+ toStep.ToString());
         a.transform.position = Vector2.Lerp(wasPos, toPos, 3);
         isReady = false;
         /*Vector2 moveUp = frameSize * Vector2.up;*/
@@ -83,6 +83,7 @@ public class MoveToward : MonoBehaviour
             }*/
         
     }
+
 
 /*    string FindPos(GameObject a, DictionaryClass dict)
     {
