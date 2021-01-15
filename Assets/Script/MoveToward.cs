@@ -6,89 +6,51 @@ public class MoveToward : MonoBehaviour
 {
     DictionaryClass dict;
     bool isReady = false;
-    int numberPressed = 0;
+    
     // Start is called before the first frame update
     void Start()
-    {
-        GameObject gameObject = new GameObject("name");
-        
+    {        
         dict = new DictionaryClass();
+    }
+
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            isReady = true;
+            Debug.Log("button down");
+        }
     }
 
     // Update is called once per frame
     private void FixedUpdate()
     {
-        /*     while (true)
-             {*/
+        if (isReady == false)
+            return;
 
-        /*for (int i = 0; i < keyCodes.Length; i++)
-        {
-            if (Input.GetKeyDown(keyCodes[i]))
-            {
-                numberPressed = i;
-                isReady = true;
-                Debug.Log("get number "+ i.ToString());
-                break;
-            }
-        }*/
-        if (Input.GetMouseButtonDown(0))
-        {
-            numberPressed = 1;
-            isReady = true;
-            Debug.Log("button down");
-        }
-
-        if (isReady == true)
-        {
-            //int numberPressed = 0;
-            /*for (int i = 0; i < keyCodes.Length; i++)
-            {
-                if (Input.GetKeyDown(keyCodes[i]))
-                {
-                    numberPressed = i;
-                    Debug.Log("get number");
-                    break;
-                }
-            }*/
-            MoveTo(gameObject, numberPressed);
-            if (Input.GetKeyDown(KeyCode.Return))
-            {
-                Debug.Log("hi");
-                Application.Quit();
-            }
-            /*break;*/
-            /*}*/
-        }
+        MoveTo(gameObject, 1);
     }
 
     void MoveTo(GameObject a, int numberPressed)
     {
-/*        float count = 0;*/
         Vector2 wasPos = a.transform.position;
-        /*        float frameSize = 1.4f;*/
-        if (dict.GetPos(wasPos) < 0)
-            Debug.Log("Error no Position!");
-        int ToStep = dict.GetPos(wasPos) + numberPressed;
-        Vector2 toPos = dict.Kans[ToStep];
-        Debug.Log("move to!"+ toPos.ToString());
+
+        int pos = dict.GetPos(wasPos);
+        if (pos < 0)
+        {
+            Debug.Log("Error no Position! "+wasPos.ToString());
+            return;
+        }
+        Debug.Log("current position is " + wasPos.ToString());
+
+        Vector2 toPos = nextToMove(pos, numberPressed);
+        Debug.Log("update position is "+ toPos.ToString());
+
         a.transform.position = Vector2.Lerp(wasPos, toPos, 3);
         isReady = false;
-        /*Vector2 moveUp = frameSize * Vector2.up;*/
 
-/*        while(count < numberPressed)
-            {
-                a.transform.position = Vector2.Lerp(wasPos, wasPos + moveUp, 3);
-                count += 1;
-            wasPos = a.transform.position;
-            }*/
-        
+        Debug.Log("move is done: " + a.transform.position.ToString());
     }
-
-/*    string FindPos(GameObject a, DictionaryClass dict)
-    {
-        a.transform.position
-        
-    }*/
 
     private KeyCode[] keyCodes =
     {
@@ -158,14 +120,17 @@ public class MoveToward : MonoBehaviour
 
         public int GetPos(Vector2 vector)
         {
-            Debug.Log("GetPos function start");
             for (int i = 0; i < Kans.Count; i++)
             {
                 if (Kans[i] == vector)
                     return i;  
             }
-            Debug.Log("in GetPos " +vector.ToString());
             return -1;
         }
+    }
+
+    private Vector2 nextToMove(int wasPos, int number)
+    {
+        return dict.Kans[wasPos + number];
     }
 }
