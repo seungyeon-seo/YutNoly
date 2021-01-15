@@ -16,14 +16,10 @@ public class Moveyut2 : MonoBehaviour
         yut2 = gameObject;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void OnButtonClick()
     {
-
-        if (Input.GetMouseButtonDown(0))
-        {
-            isButton = true;
-        }
+        Debug.Log("Button Click2");
+        isButton = true;
     }
 
     private void FixedUpdate()

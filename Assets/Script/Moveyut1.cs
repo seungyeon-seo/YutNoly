@@ -6,9 +6,9 @@ using System;
 public class Moveyut1 : MonoBehaviour
 {
     public GameObject yut1;
-    public int resultYut;
+    public int resultYut = -1;
     float rotSpeed = 20.0f;
-    bool isButton = false;
+    public bool isButton = false;
     float t = 0;
 
     // Start is called before the first frame update
@@ -20,11 +20,13 @@ public class Moveyut1 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       
-        if (Input.GetMouseButtonDown(0))
-        {
-            isButton = true;
-        }
+
+    }
+
+    public void OnButtonClick()
+    {
+        Debug.Log("Button Click1");
+        isButton = true;
     }
 
     private void FixedUpdate()

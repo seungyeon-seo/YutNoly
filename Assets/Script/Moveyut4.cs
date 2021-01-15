@@ -16,13 +16,10 @@ public class Moveyut4 : MonoBehaviour
         yut4 = gameObject;
     }
 
-    // Update is called once per frame
-    void Update()
-    { 
-        if (Input.GetMouseButtonDown(0))
-        {
-            isButton = true;
-        }
+    public void OnButtonClick()
+    {
+        Debug.Log("Button Click4");
+        isButton = true;
     }
 
     private void FixedUpdate()

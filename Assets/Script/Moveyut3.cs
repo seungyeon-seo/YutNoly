@@ -16,16 +16,11 @@ public class Moveyut3 : MonoBehaviour
         yut3 = gameObject;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void OnButtonClick()
     {
-
-        if (Input.GetMouseButtonDown(0))
-        {
-            isButton = true;
-        }
+        Debug.Log("Button Click3");
+        isButton = true;
     }
-
     private void FixedUpdate()
     {
         RotateYut();
