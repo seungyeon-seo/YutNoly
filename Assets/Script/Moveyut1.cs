@@ -1,16 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
-public class Moveyut : MonoBehaviour
+public class Moveyut1 : MonoBehaviour
 {
     float rotSpeed = 20.0f;
     bool isButton = false;
     float t = 0;
+    Sprite yutObject;
+    Sprite yut2Image;
 
     // Start is called before the first frame update
     void Start()
     {
+        yutObject = gameObject.GetComponent<SpriteRenderer>().sprite;
     }
 
     // Update is called once per frame
@@ -38,9 +42,27 @@ public class Moveyut : MonoBehaviour
       
         if (t >= Time.deltaTime * 50)
         {
-            Debug.Log("Stop");
+            // init variables
             isButton = false;
             t = 0;
+
+            // show yuts
+            changeImage();
         }
     }
+
+    void changeImage()
+    {
+        transform.localEulerAngles = new Vector3(-18, 7, 167);
+
+        // calc result
+        System.Random r = new System.Random();
+        int res = r.Next(1, 17);
+        Debug.Log("result: "+res);
+        if (res != 16 && res != 4) //도 개 걸 윷
+            this.gameObject.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("yut2");
+        else // 도' 모
+            this.gameObject.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("yut1");
+    }
+
 }
