@@ -49,7 +49,7 @@ public class Moveyut1 : MonoBehaviour
 
             // show yuts
             changeImage();
-            GameObject.Find("player").GetComponent<MoveToward>().getResult(resultYut);
+            GameObject.Find("player1").GetComponent<MoveToward>().getResult(resultYut);
             resultYut = 0;
         }
     }

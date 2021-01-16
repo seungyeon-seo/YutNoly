@@ -73,8 +73,7 @@ public class MoveToward : MonoBehaviour
         {
             Kans = new Dictionary<int, Vector2>();
 
-            Vector2 a = new Vector2(13.7f, 9.9f);
-            Kans.Add(0, a);
+            Kans.Add(0, new Vector2(13.72f, 9.93f));
             Kans.Add(1, new Vector2(13.63f, 11.68f));
             Kans.Add(2, new Vector2(-2.24f, 3.63f));
             Kans.Add(3, new Vector2(-2.24f, 5.16f));
@@ -120,8 +119,18 @@ public class MoveToward : MonoBehaviour
         {
             for (int i = 0; i < Kans.Count; i++)
             {
-                if (Kans[i] == vector)
-                    return i;  
+                if (i == 0)
+                {
+                    Debug.Log("kan 0: "+Kans[0].ToString());
+                    Debug.Log(Kans[0].x + ", " + Kans[0].y);
+                    Debug.Log("cur pos: "+vector.ToString()); 
+                    Debug.Log(vector.x + ", " + vector.y);
+                }
+                if (Kans[i].Equals(vector))
+                {
+                    Debug.Log("EQ");
+                    return i;
+                }
             }
             return -1;
         }
@@ -135,7 +144,41 @@ public class MoveToward : MonoBehaviour
     public void getResult(int res)
     {
         isReady = true;
-        resYut = res;
-        Debug.Log("get result from move yut1: " + res);
+        switch (res)
+        {
+            case 1:
+            case 2:
+            case 3:
+                resYut = 1;
+                break;
+            case 4:
+                resYut = -1;
+                break;
+            case 5:
+            case 6:
+            case 7:
+            case 8:
+            case 9:
+            case 10:
+                resYut = 2;
+                break;
+            case 11:
+            case 12:
+            case 13:
+            case 14:
+                resYut = 3;
+                break;
+            case 15:
+                resYut = 4;
+                break;
+            case 16:
+                resYut = 5;
+                break;
+            default:
+                resYut = 0;
+                Debug.LogError("Get Wrong result from moveYut1");
+                break;
+        }
+        Debug.Log("get result from move yut1: " + res + " " + resYut);
     }
 }
