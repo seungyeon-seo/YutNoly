@@ -25,7 +25,6 @@ public class Moveyut1 : MonoBehaviour
 
     public void OnButtonClick()
     {
-        Debug.Log("Button Click1");
         isButton = true;
     }
 
@@ -50,6 +49,8 @@ public class Moveyut1 : MonoBehaviour
 
             // show yuts
             changeImage();
+            GameObject.Find("player").GetComponent<MoveToward>().getResult(resultYut);
+            resultYut = 0;
         }
     }
 
@@ -60,7 +61,6 @@ public class Moveyut1 : MonoBehaviour
         // calc result
         System.Random r = new System.Random();
         resultYut = r.Next(1, 17);
-        Debug.Log("resultYut: " + resultYut);
         if (resultYut != 16 && resultYut != 4) //도 개 걸 윷
             this.gameObject.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("yut2");
         else // 도' 모

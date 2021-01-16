@@ -18,7 +18,6 @@ public class Moveyut3 : MonoBehaviour
 
     public void OnButtonClick()
     {
-        Debug.Log("Button Click3");
         isButton = true;
     }
     private void FixedUpdate()

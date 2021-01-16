@@ -18,7 +18,6 @@ public class Moveyut2 : MonoBehaviour
 
     public void OnButtonClick()
     {
-        Debug.Log("Button Click2");
         isButton = true;
     }
 

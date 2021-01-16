@@ -18,7 +18,6 @@ public class Moveyut4 : MonoBehaviour
 
     public void OnButtonClick()
     {
-        Debug.Log("Button Click4");
         isButton = true;
     }
 
