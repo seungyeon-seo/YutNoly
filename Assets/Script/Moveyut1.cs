@@ -38,7 +38,7 @@ public class Moveyut1 : MonoBehaviour
     {
         if (!isButton)
             return; 
-       
+        
         transform.Rotate(Vector3.up * rotSpeed);
         t += Time.deltaTime;
       
@@ -53,11 +53,13 @@ public class Moveyut1 : MonoBehaviour
             switch (turn)
             {
                 case 0:
-                    GameObject.Find("player1").GetComponent<MoveToward>().getResult(resultYut);
+                    Debug.Log("boy's turn");
+                    GameObject.Find("player1").GetComponent<MapButton>().getResult(resultYut);
                     turn = 1;
                     break;
                 case 1:
-                    GameObject.Find("player2").GetComponent<MoveToward>().getResult(resultYut);
+                    Debug.Log("girl's turn");
+                    GameObject.Find("player2").GetComponent<MapButton>().getResult(resultYut);
                     turn = 0;
                     break;
                 default:
