@@ -6,90 +6,57 @@ public class MoveToward : MonoBehaviour
 {
     DictionaryClass dict;
     bool isReady = false;
-    int numberPressed = 0;
+    
     // Start is called before the first frame update
     void Start()
-    {
-        GameObject gameObject = new GameObject("name");
-        
+    {        
         dict = new DictionaryClass();
+        StartPos(gameObject);
+    }
+
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            isReady = true;
+            Debug.Log("button down");
+        }
     }
 
     // Update is called once per frame
     private void FixedUpdate()
     {
-        /*     while (true)
-             {*/
+        if (isReady == false)
+            return;
 
-        /*for (int i = 0; i < keyCodes.Length; i++)
-        {
-            if (Input.GetKeyDown(keyCodes[i]))
-            {
-                numberPressed = i;
-                isReady = true;
-                Debug.Log("get number "+ i.ToString());
-                break;
-            }
-        }*/
-        if (Input.GetMouseButtonDown(0))
-        {
-            numberPressed = 1;
-            isReady = true;
-            Debug.Log("button down");
-        }
-
-        if (isReady == true)
-        {
-            //int numberPressed = 0;
-            /*for (int i = 0; i < keyCodes.Length; i++)
-            {
-                if (Input.GetKeyDown(keyCodes[i]))
-                {
-                    numberPressed = i;
-                    Debug.Log("get number");
-                    break;
-                }
-            }*/
-            MoveTo(gameObject, numberPressed);
-            if (Input.GetKeyDown(KeyCode.Return))
-            {
-                Debug.Log("hi");
-                Application.Quit();
-            }
-            /*break;*/
-            /*}*/
-        }
+        MoveTo(gameObject, 1);
     }
 
     void MoveTo(GameObject a, int numberPressed)
     {
-/*        float count = 0;*/
         Vector2 wasPos = a.transform.position;
-        /*        float frameSize = 1.4f;*/
-        if (dict.GetPos(wasPos) < 0)
-            Debug.Log("Error no Position!");
-        int toStep = dict.GetPos(wasPos) + numberPressed;
-        Vector2 toPos = dict.Kans[toStep];
-        Debug.Log("move to!"+ toStep.ToString());
+        int pos = dict.GetPos(wasPos);
+        if (pos < 0)
+        {
+            Debug.Log("Error no Position! "+wasPos.ToString());
+            return;
+        }
+        Debug.Log("current position is " + wasPos.ToString());
+
+        Vector2 toPos = nextToMove(pos, numberPressed);
+        Debug.Log("update position is "+ toPos.ToString());
+
         a.transform.position = Vector2.Lerp(wasPos, toPos, 3);
         isReady = false;
-        /*Vector2 moveUp = frameSize * Vector2.up;*/
 
-/*        while(count < numberPressed)
-            {
-                a.transform.position = Vector2.Lerp(wasPos, wasPos + moveUp, 3);
-                count += 1;
-            wasPos = a.transform.position;
-            }*/
-        
+        Debug.Log("move is done: " + a.transform.position.ToString());
     }
 
-
-/*    string FindPos(GameObject a, DictionaryClass dict)
+    void StartPos(GameObject a)
     {
-        a.transform.position
-        
-    }*/
+        a.transform.position = dict.Kans[0];
+        Debug.Log("position is " + dict.Kans[0].ToString());
+    }
 
     private KeyCode[] keyCodes =
     {
@@ -114,59 +81,72 @@ public class MoveToward : MonoBehaviour
         {
             Kans = new Dictionary<int, Vector2>();
 
-            Vector2 a = new Vector2(-2.2f, 0.7f);
+            Vector2 a = new Vector2(-5.22f, -1.72f);
             Kans.Add(0, a);
-            Kans.Add(1, new Vector2(-2.2f, 2.2f));
-            Kans.Add(2, new Vector2(-2.24f, 3.63f));
-            Kans.Add(3, new Vector2(-2.24f, 5.16f));
-            Kans.Add(4, new Vector2(-2.24f, 6.69f));
-            Kans.Add(5, new Vector2(-2.24f, 8.09f));
-            /*Vector2 a = new Vector2(3.3f, -4.0f);
-            Kans.Add(0, a);
-            Kans.Add(1, new Vector2(3.3f, -2.5f));
-            Kans.Add(2, new Vector2(3.3f, -1.0f));
-            Kans.Add(3, new Vector2(3.3f, 0.5f));
-            Kans.Add(4, new Vector2(3.3f, 2.0f));
-            Kans.Add(5, new Vector2(3.3f, 3.3f));*/
-            Kans.Add(6, new Vector2(1.53f, 3.45f));
-            Kans.Add(7, new Vector2(0.03f, 3.45f));
-            Kans.Add(8, new Vector2(-1.53f, 3.45f));
-            Kans.Add(9, new Vector2(-3.03f, 3.45f));
-            Kans.Add(10, new Vector2(-4.77f, 3.45f));
-            Kans.Add(11, new Vector2(-4.77f, 2.04f));
-            Kans.Add(12, new Vector2(-4.77f, 0.55f));
-            Kans.Add(13, new Vector2(-4.77f, -0.96f));
-            Kans.Add(14, new Vector2(-4.77f, -2.47f));
-            Kans.Add(15, new Vector2(-4.77f, -3.93f));
-            Kans.Add(16, new Vector2(-3.03f, -3.93f));
-            Kans.Add(17, new Vector2(-1.53f, -3.93f));
-            Kans.Add(18, new Vector2(0.03f, -3.93f));
-            Kans.Add(19, new Vector2(1.53f, -3.93f));
-            Kans.Add(20, new Vector2(3.3f, 3.93f));
+            Kans.Add(1, new Vector2(-5.22f, -0.18f));
+            Kans.Add(2, new Vector2(-5.22f, 1.31f));
+            Kans.Add(3, new Vector2(-5.22f, 2.8f));
+            Kans.Add(4, new Vector2(-5.22f, 4.24f));
+            Kans.Add(5, new Vector2(6.28f, 5.85f));
+            Kans.Add(6, new Vector2(4.54f, 5.85f));
+            Kans.Add(7, new Vector2(3f, 5.85f));
+            Kans.Add(8, new Vector2(1.46f, 5.85f));
+            Kans.Add(9, new Vector2(-0.05f, 5.85f));
+            Kans.Add(10, new Vector2(-1.82f, 5.85f));
+            Kans.Add(11, new Vector2(-1.82f, 4.41f));
+            Kans.Add(12, new Vector2(-1.82f, 2.92f));
+            Kans.Add(13, new Vector2(-1.82f, 1.46f));
+            Kans.Add(14, new Vector2(-1.82f,-0.03f));
+            Kans.Add(15, new Vector2(-1.82f, -1.54f));
+            Kans.Add(16, new Vector2(-0.05f, -1.54f));
+            Kans.Add(17, new Vector2(1.46f, -1.54f));
+            Kans.Add(18, new Vector2(3f, -1.54f));
+            Kans.Add(19, new Vector2(4.51f, -1.54f));
+            Kans.Add(20, new Vector2(6.28f, -1.54f));
 
 
-          /*  Kans.Add("21", new Vector2(3.8f, 0.6f));
-            Kans.Add("22", new Vector2(3.8f, 0.6f));
-            Kans.Add("23", new Vector2(3.8f, 0.6f));
-            Kans.Add("24", new Vector2(3.8f, 0.6f));
-            Kans.Add("25", new Vector2(3.8f, 0.6f));
-            Kans.Add("26", new Vector2(3.8f, 0.6f));
-            Kans.Add("27", new Vector2(3.8f, 0.6f));
-            Kans.Add("28", new Vector2(3.8f, 0.6f));
-            Kans.Add("29", new Vector2(3.8f, 0.6f));*/
+            Kans.Add(21, new Vector2(3.8f, 0.6f));
+            Kans.Add(22, new Vector2(3.8f, 0.6f));
+            Kans.Add(23, new Vector2(3.8f, 0.6f));
+            Kans.Add(24, new Vector2(3.8f, 0.6f));
+            Kans.Add(25, new Vector2(3.8f, 0.6f));
+            Kans.Add(26, new Vector2(3.8f, 0.6f));
+            Kans.Add(27, new Vector2(3.8f, 0.6f));
+            Kans.Add(28, new Vector2(3.8f, 0.6f));
+            Kans.Add(29, new Vector2(3.8f, 0.6f));
         }
 
 
         public int GetPos(Vector2 vector)
         {
-            Debug.Log("GetPos function start");
             for (int i = 0; i < Kans.Count; i++)
             {
                 if (Kans[i] == vector)
                     return i;  
             }
-            Debug.Log("in GetPos " +vector.ToString());
             return -1;
         }
     }
+
+    private Vector2 nextToMove(int wasPos, int number)
+    {
+        if (wasPos != 19)
+            return dict.Kans[wasPos + number];
+
+        else if (wasPos == 5) // 모에 와서 안으로 꺾어질 때 
+            return dict.Kans[wasPos * 4 + number];
+
+        //else if (wasPos == 23) // 정가운데 
+            
+
+        else
+            return new Vector2(-0.15f, 0.7f);
+    }
+
+    public void OnClickButton()
+    {
+
+        return;
+    }
+
 }
