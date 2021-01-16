@@ -39,19 +39,13 @@ public class Moveyut4 : MonoBehaviour
             // init variables
             isButton = false;
             t = 0;
-
-            // show yuts
-            changeImage();
         }
     }
 
-    void changeImage()
+    public void setResult(int res)
     {
         transform.localEulerAngles = new Vector3(-18, 7, 167);
 
-        // calc result
-        System.Random r = new System.Random();
-        int res = r.Next(1, 17);
         if (res == 15 || res == 4) // 도' 윷
             this.gameObject.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("yut3");
         else // 도 개 걸 모

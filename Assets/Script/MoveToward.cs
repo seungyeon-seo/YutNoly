@@ -35,7 +35,6 @@ public class MoveToward : MonoBehaviour
         int pos = dict.GetPos(wasPos);
         if (pos < 0)
         {
-            Debug.Log("Error no Position! "+wasPos.ToString());
             return;
         }
         Debug.Log("current position is " + wasPos.ToString());
@@ -141,44 +140,5 @@ public class MoveToward : MonoBehaviour
         return dict.Kans[wasPos + number];
     }
 
-    public void getResult(int res)
-    {
-        isReady = true;
-        switch (res)
-        {
-            case 1:
-            case 2:
-            case 3:
-                resYut = 1;
-                break;
-            case 4:
-                resYut = -1;
-                break;
-            case 5:
-            case 6:
-            case 7:
-            case 8:
-            case 9:
-            case 10:
-                resYut = 2;
-                break;
-            case 11:
-            case 12:
-            case 13:
-            case 14:
-                resYut = 3;
-                break;
-            case 15:
-                resYut = 4;
-                break;
-            case 16:
-                resYut = 5;
-                break;
-            default:
-                resYut = 0;
-                Debug.LogError("Get Wrong result from moveYut1");
-                break;
-        }
-        Debug.Log("get result from move yut1: " + res + " " + resYut);
-    }
+   
 }

@@ -39,20 +39,14 @@ public class Moveyut2 : MonoBehaviour
             // init variables
             isButton = false;
             t = 0;
-
-            // show yuts
-            changeImage();
         }
     }
 
-    void changeImage()
+    public void setResult(int res)
     {
         transform.localEulerAngles = new Vector3(-18, 7, 167);
 
-        // calc result
-        System.Random r = new System.Random();
-        int res = r.Next(1, 17);
-        if ((res>=5 && res<=10) || (res>=11 && res<=14) || res == 15) // 개 걸 윷
+        if ((res >= 5 && res <= 10) || (res >= 11 && res <= 14) || res == 15) // 개 걸 윷
             this.gameObject.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("yut2");
         else // 도 도' 모
             this.gameObject.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("yut1");
