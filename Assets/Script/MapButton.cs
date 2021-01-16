@@ -135,6 +135,12 @@ public class MapButton : MonoBehaviour
         int NextPos = 0;
         switch (CurPos)
         {
+            case 0:
+                if (res == -1)
+                    NextPos = CurPos;
+                else
+                    NextPos = CurPos + res;
+                break;
             case 5: //첫번째 꼭짓점
                 NextPos = CurPos * 4 + res;
                 break;
@@ -146,10 +152,33 @@ public class MapButton : MonoBehaviour
                 else
                     NextPos = CurPos + res;
                 break;
-
+            case 16:
+                if (res >= 5)
+                    NextPos = 30;
+                else
+                    NextPos = CurPos + res;
+                break;
+            case 17:
+                if (res >= 4)
+                    NextPos = 30;
+                else
+                    NextPos = CurPos + res;
+                break;
+            case 18:
+                if (res >= 3)
+                    NextPos = 30;
+                else
+                    NextPos = CurPos + res;
+                break;
+            case 19:
+                if (res >= 2)
+                    NextPos = 30;
+                else
+                    NextPos = CurPos + res;
+                break;
             case 20: // 종점
                 if (res > 1)
-                    NextPos = 100;
+                    NextPos = 30;
                 else
                     NextPos = CurPos + res;
                 break;
@@ -171,7 +200,9 @@ public class MapButton : MonoBehaviour
 
             case 23: // 가운데
                 if (res >= 4)
-                    NextPos = 100;
+                    NextPos = 30;
+                else if (res < 3)
+                    NextPos = 27 + res;
                 else if (res == 3)
                     NextPos = 20;
                 else
@@ -205,7 +236,7 @@ public class MapButton : MonoBehaviour
                 else if (res == 4)
                     NextPos = 20;
                 else if (res == 5)
-                    NextPos = 100;
+                    NextPos = 30;
                 else
                     NextPos = CurPos + res;
                 break;
@@ -215,13 +246,13 @@ public class MapButton : MonoBehaviour
                 else if (res == 2)
                     NextPos = 20;
                 else if (res > 2)
-                    NextPos = 100;
+                    NextPos = 30;
                 else
                     NextPos = CurPos + res;
                 break;
             case 29: // 제2대각선 5번째 위치
                 if (res >= 2)
-                    NextPos = 100;
+                    NextPos = 30;
                 else if (res == 1)
                     NextPos = 20;
                 else

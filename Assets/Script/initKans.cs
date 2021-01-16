@@ -11,7 +11,7 @@ public class initKans : MonoBehaviour
     void Start()
     {
         Kans = new List<GameObject>();
-        for (int i = 0; i < 30; i++)
+        for (int i = 0; i < 31; i++)
         {
             GameObject obj1 = GameObject.Find("Kan_" + i.ToString());
             /*if (obj1.GetComponent<SpriteRenderer>() != null)

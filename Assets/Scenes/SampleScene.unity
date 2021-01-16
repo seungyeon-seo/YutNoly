@@ -810,7 +810,7 @@ GameObject:
   - component: {fileID: 323150813}
   - component: {fileID: 323150812}
   m_Layer: 0
-  m_Name: Kan_100
+  m_Name: Kan_30
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
