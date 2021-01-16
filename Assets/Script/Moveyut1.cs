@@ -10,6 +10,7 @@ public class Moveyut1 : MonoBehaviour
     float rotSpeed = 20.0f;
     public bool isButton = false;
     float t = 0;
+    int turn = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -49,7 +50,21 @@ public class Moveyut1 : MonoBehaviour
 
             // show yuts
             changeImage();
-            GameObject.Find("player1").GetComponent<MoveToward>().getResult(resultYut);
+            switch (turn)
+            {
+                case 0:
+                    GameObject.Find("player1").GetComponent<MoveToward>().getResult(resultYut);
+                    turn = 1;
+                    break;
+                case 1:
+                    GameObject.Find("player2").GetComponent<MoveToward>().getResult(resultYut);
+                    turn = 0;
+                    break;
+                default:
+                    Debug.LogError("Wrong Turn");
+                    break;
+            }
+            
             resultYut = 0;
         }
     }
