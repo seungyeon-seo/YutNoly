@@ -109,4 +109,10 @@ public class Moveyut1 : MonoBehaviour
             this.gameObject.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("yut1");
 
     }
+
+    public void callDoOneTurn(int t, List<int> res)
+    {
+        resultYut = res;
+        turn = t;
+    }
 }

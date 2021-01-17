@@ -47,6 +47,7 @@ public class MapButton : MonoBehaviour
             moveTo();
             PlayerPos = UpdatePos;
             unableKans();
+            checkPos();
             if (resYut.Count == 0)
             {
                 isReady = false;
@@ -91,6 +92,49 @@ public class MapButton : MonoBehaviour
         }
         else
             Debug.LogError("hit.collider is null");
+    }
+
+    private void checkPos()
+    {
+        GameObject other;
+        int turn;
+        if (gameObject.name == "player1") {
+            other = GameObject.Find("player2");
+            turn = 0;
+        }
+        else
+        {
+            other = GameObject.Find("player1");
+            turn = 1;
+        }
+        if (PlayerPos != other.GetComponent<MapButton>().getPosition())
+            return;
+
+        other.GetComponent<MapButton>().setPosition(0);
+
+        // set res for parameter of callDoOneTurn
+        List<int> res = new List<int>();
+        int count = resYut.Count;
+        for (int i = 0; i < count; i++)
+        {
+            res.Add(resYut[i].Item1);
+        }
+        haveToUpdate = false;
+
+        GameObject.Find("yut").GetComponent<Moveyut1>().callDoOneTurn(turn, res);
+    }
+
+    public int getPosition()
+    {
+        return PlayerPos;
+    }
+
+    public void setPosition(int pos)
+    {
+        PlayerPos = pos;
+        Vector2 from = gameObject.transform.position;
+        Vector2 to = Kans[pos].transform.position;
+        gameObject.transform.position = Vector2.Lerp(from, to, 10);
     }
 
     public void getResult(List<int> res)
