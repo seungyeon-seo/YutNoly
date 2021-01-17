@@ -55,6 +55,7 @@ public class ManagePlayer : MonoBehaviour
         {
             GameObject movingCharac = hit.collider.gameObject;
             movingCharac.GetComponent<MapButton>().getResult(yutInfo);
+            yutInfo.Clear();
         }
         isClick = false;
         isReady = false;
@@ -97,5 +98,35 @@ public class ManagePlayer : MonoBehaviour
         {
             // set active true
         }
+    }
+    public void checkPos(int pos, int turn)
+    {
+        Debug.Log("in checkPos | my pos is " + pos);
+        foreach (GameObject obj in getOtherPlayers())
+        {
+            if (pos == obj.GetComponent<MapButton>().getPosition())
+            {
+                Debug.Log(obj.name + "is same pos");
+                obj.GetComponent<MapButton>().setPosition(0);
+                obj.GetComponent<MapButton>().catchOther(turn);
+            }
+        }
+    }
+
+    List<GameObject> getOtherPlayers()
+    {
+        if (owner == 1)
+        {
+            return GameObject.Find("player2_1").GetComponent<ManagePlayer>().getPlayers();
+        }
+        else
+        {
+            return GameObject.Find("player1_1").GetComponent<ManagePlayer>().getPlayers();
+        }
+    }
+
+    public List<GameObject> getPlayers()
+    {
+        return players;
     }
 }

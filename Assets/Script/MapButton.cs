@@ -14,10 +14,16 @@ public class MapButton : MonoBehaviour
     Vector2 mousePos2D;
     List<GameObject> Kans;
     int UpdatePos = -1;
+    int owner;
 
     // Start is called before the first frame update
     void Start()
-    {   
+    {
+        // set type
+        string[] separatingStrings = { "player", "_" };
+        string[] str = gameObject.name.Split(separatingStrings, System.StringSplitOptions.RemoveEmptyEntries);
+        owner = Int32.Parse(str[0]);
+
         // init flags
         isReady = false;
         isClick = false;
@@ -94,23 +100,17 @@ public class MapButton : MonoBehaviour
 
     private void checkPos()
     {
-        GameObject other;
-        int turn;
-        if (gameObject.name == "player1") {
-            other = GameObject.Find("player2");
-            turn = 0;
+        if (owner == 1) {
+            GameObject.Find("player1_1").GetComponent<ManagePlayer>().checkPos(PlayerPos, 0);
         }
         else
         {
-            other = GameObject.Find("player1");
-            turn = 1;
+            GameObject.Find("player2_1").GetComponent<ManagePlayer>().checkPos(PlayerPos, 1);
         }
-        if (PlayerPos != other.GetComponent<MapButton>().getPosition())
-            return;
+    }
 
-        other.GetComponent<MapButton>().setPosition(0);
-
-        // set res for parameter of callDoOneTurn
+    public void catchOther(int turn)
+    {
         List<int> res = new List<int>();
         int count = resYut.Count;
         for (int i = 0; i < count; i++)
