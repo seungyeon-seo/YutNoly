@@ -7,7 +7,6 @@ public class Moveyut4 : MonoBehaviour
 {
     public GameObject yut4;
     float rotSpeed = 20.0f;
-    bool isButton = false;
     float t = 0;
 
     // Start is called before the first frame update
@@ -18,28 +17,16 @@ public class Moveyut4 : MonoBehaviour
 
     public void OnButtonClick()
     {
-        isButton = true;
     }
 
     private void FixedUpdate()
     {
-        RotateYut();
     }
 
-    void RotateYut()
+    public void RotateYut()
     {
-        if (!isButton)
-            return;
-
-        transform.Rotate(Vector3.up * rotSpeed);
-        t += Time.deltaTime;
-
-        if (t >= Time.deltaTime * 50)
-        {
-            // init variables
-            isButton = false;
-            t = 0;
-        }
+        for (int i = 0; i < 500; i++)
+            transform.Rotate(Vector3.up * rotSpeed);
     }
 
     public void setResult(int res)

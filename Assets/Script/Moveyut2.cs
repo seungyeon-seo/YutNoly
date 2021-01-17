@@ -23,23 +23,12 @@ public class Moveyut2 : MonoBehaviour
 
     private void FixedUpdate()
     {
-        RotateYut();
     }
 
-    void RotateYut()
+    public void RotateYut()
     {
-        if (!isButton)
-            return;
-
-        transform.Rotate(Vector3.up * rotSpeed);
-        t += Time.deltaTime;
-
-        if (t >= Time.deltaTime * 50)
-        {
-            // init variables
-            isButton = false;
-            t = 0;
-        }
+        for (int i = 0; i < 500; i++)
+            transform.Rotate(Vector3.up * rotSpeed);
     }
 
     public void setResult(int res)

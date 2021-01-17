@@ -8,7 +8,6 @@ public class MapButton : MonoBehaviour
     bool isReady;
     bool isClick;
     List<(int, GameObject)> resYut;
-    List<GameObject> activeKans;
     int PlayerPos;
     Vector2 mousePos2D;
     List<GameObject> Kans;
@@ -19,7 +18,6 @@ public class MapButton : MonoBehaviour
     {   
         isReady = false;
         isClick = false;
-        activeKans = new List<GameObject>();
         resYut = new List<(int, GameObject)>();
         PlayerPos = 0;
     }

@@ -9,9 +9,10 @@ public class Moveyut1 : MonoBehaviour
     public List<int> resultYut;
     float rotSpeed = 20.0f;
     public bool isButton = false;
+    bool isRotate = false;
     float t = 0;
     int turn = 0;
-    int res = 15;
+    int res;
 
     // Start is called before the first frame update
     void Start()
@@ -33,46 +34,53 @@ public class Moveyut1 : MonoBehaviour
 
     private void FixedUpdate()
     {
-        while (res == 15 || res == 16)
-            RotateYut();
+        if (!isRotate)
+        {
+            isRotate = true;
+            do {
+                RotateYut();
+            } while (res == 15 || res == 16);
+            isRotate = false;
+
+            if (isButton)
+            {
+                switch (turn)
+                {
+                    case 0:
+                        GameObject.Find("player1").GetComponent<MapButton>().getResult(resultYut);
+                        turn = 1;
+                        break;
+                    case 1:
+                        GameObject.Find("player2").GetComponent<MapButton>().getResult(resultYut);
+                        turn = 0;
+                        break;
+                    default:
+                        Debug.LogError("Wrong Turn");
+                        break;
+                }
+                resultYut.Clear();
+                isButton = false;
+
+                Debug.Log("after clear - count: " + resultYut.Count);
+            }
+        }
     }
 
     void RotateYut()
     {
         if (!isButton)
-            return; 
-        
-        transform.Rotate(Vector3.up * rotSpeed);
-        t += Time.deltaTime;
-      
-        if (t >= Time.deltaTime * 50)
-        {
-            // init variables
-            isButton = false;
-            t = 0;
+            return;
 
-            // show yuts
-            changeImage();
-            
-            switch (turn)
-            {
-                case 0:
-                    GameObject.Find("player1").GetComponent<MapButton>().getResult(resultYut);
-                    turn = 1;
-                    break;
-                case 1:
-                    GameObject.Find("player2").GetComponent<MapButton>().getResult(resultYut);
-                    turn = 0;
-                    break;
-                default:
-                    Debug.LogError("Wrong Turn");
-                    break;
-            }
-            resultYut.Clear();
-            res = 15;
-            Debug.Log("after clear - count: " + resultYut.Count);
-        }
+        GameObject.Find("yut2").GetComponent<Moveyut2>().RotateYut();
+        GameObject.Find("yut3").GetComponent<Moveyut3>().RotateYut();
+        GameObject.Find("yut4").GetComponent<Moveyut4>().RotateYut();
+        for (int i = 0; i < 500000; i++)
+            transform.Rotate(Vector3.up * rotSpeed);
+
+        // show yuts
+        changeImage();
     }
+    
 
     void changeImage()
     {
