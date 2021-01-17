@@ -8,6 +8,7 @@ public class MapButton : MonoBehaviour
     GameObject obj2 = null;
     bool isReady;
     bool isClick;
+    bool haveToUpdate;
     List<(int, GameObject)> resYut;
     int PlayerPos;
     Vector2 mousePos2D;
@@ -46,11 +47,22 @@ public class MapButton : MonoBehaviour
             moveTo();
             PlayerPos = UpdatePos;
             unableKans();
-            resYut.Clear();
+            if (resYut.Count == 0)
+            {
+                isReady = false;
+                return;
+            }
+            haveToUpdate = true;
         }
 
         else // isReady만 true
         {
+            if (haveToUpdate)
+            {
+                Debug.Log("update: " + PlayerPos);
+                updateResult();
+                haveToUpdate = false;
+            }
             showButtons();
         } 
     }
@@ -64,9 +76,7 @@ public class MapButton : MonoBehaviour
             Debug.Log(hit.collider.gameObject.name);
             GameObject moveToKan = hit.collider.gameObject;
             Vector2 clickedKan = moveToKan.transform.position;
-            Debug.Log("button pos: " + clickedKan.ToString());
             Vector2 myPos = gameObject.transform.position;
-            Debug.Log("player1 pos: " + myPos.ToString());
             obj2.transform.position = Vector2.Lerp(myPos, clickedKan, 10);
             
             // set UpdatePos
@@ -75,7 +85,6 @@ public class MapButton : MonoBehaviour
             UpdatePos = Int32.Parse(names[0]);
 
             // init flags
-            isReady = false;
             isClick = false;
             moveToKan.SetActive(false);
             deleteKan(moveToKan);
@@ -94,6 +103,7 @@ public class MapButton : MonoBehaviour
                 case 1:
                 case 2:
                 case 3:
+                    //resYut.Add((1, null));
                     resYut.Add((1, Kans[calcNextPos(1)]));
                     break;
                 case 4:
@@ -126,6 +136,17 @@ public class MapButton : MonoBehaviour
             Debug.Log("get result from move yut1: " + res + " " + resYut);
         }
         isReady = true;
+    }
+
+    void updateResult()
+    {
+        List<(int, GameObject)> update = new List<(int, GameObject)>();
+        int count = resYut.Count;
+        for (int i = 0; i <count; i++)
+        {
+            update.Add((resYut[i].Item1, Kans[calcNextPos(resYut[i].Item1)]));
+        }
+        resYut = update;
     }
 
     public int calcNextPos(int res)
