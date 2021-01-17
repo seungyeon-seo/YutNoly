@@ -162,11 +162,14 @@ public class MapButton : MonoBehaviour
                     NextPos = CurPos + res;
                 break;
             case 5: //첫번째 꼭짓점
-                NextPos = CurPos * 4 + res;
+                if (res == -1)
+                    NextPos = CurPos + res;
+                else
+                    NextPos = CurPos * 4 + res;
                 break;
             case 10: // 두번째 꼭짓점
-                if (res != 3 && res <= 5)
-                    NextPos = 24 + res;
+                if (res != 3 && res <= 5 && res >0)
+                    NextPos = 25 + res;
                 else if (res == 3)
                     NextPos = 23;
                 else
