@@ -22,8 +22,15 @@ public class initKans : MonoBehaviour
             Kans.Add(obj1);
             GameObject.Find("Kan_" + i.ToString()).SetActive(false);
         }
-        GameObject.Find("player1").GetComponent<MapButton>().initKans(Kans);
-        GameObject.Find("player2").GetComponent<MapButton>().initKans(Kans);
+
+        GameObject.Find("player1_1").GetComponent<MapButton>().initKans(Kans);
+        GameObject.Find("player1_2").GetComponent<MapButton>().initKans(Kans);
+        GameObject.Find("player1_3").GetComponent<MapButton>().initKans(Kans);
+        GameObject.Find("player1_4").GetComponent<MapButton>().initKans(Kans);
+        GameObject.Find("player2_1").GetComponent<MapButton>().initKans(Kans);
+        GameObject.Find("player2_2").GetComponent<MapButton>().initKans(Kans);
+        GameObject.Find("player2_3").GetComponent<MapButton>().initKans(Kans);
+        GameObject.Find("player2_4").GetComponent<MapButton>().initKans(Kans);
     }
 
     // Update is called once per frame

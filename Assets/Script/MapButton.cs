@@ -90,8 +90,6 @@ public class MapButton : MonoBehaviour
             moveToKan.SetActive(false);
             deleteKan(moveToKan);
         }
-        else
-            Debug.LogError("hit.collider is null");
     }
 
     private void checkPos()
@@ -139,6 +137,7 @@ public class MapButton : MonoBehaviour
 
     public void getResult(List<int> res)
     {
+        Debug.Log("res count in getResult (MapButton): " + res.Count);
         int count = res.Count;
         for (int i = 0; i < count; i++)
         {
@@ -147,7 +146,6 @@ public class MapButton : MonoBehaviour
                 case 1:
                 case 2:
                 case 3:
-                    //resYut.Add((1, null));
                     resYut.Add((1, Kans[calcNextPos(1)]));
                     break;
                 case 4:
@@ -357,6 +355,7 @@ public class MapButton : MonoBehaviour
 
     public void showButtons()
     {
+        // Debug.Log("show Buttons in MapButton");
         int count = resYut.Count;
         for (int i = 0; i < count; i++)
         {
@@ -369,6 +368,7 @@ public class MapButton : MonoBehaviour
         Kans = kans;
         obj2 = gameObject;
         GameObject startobj = Kans[0];
-        obj2.transform.position = startobj.transform.position;
+       
+        // obj2.transform.position = startobj.transform.position;
     }
 }

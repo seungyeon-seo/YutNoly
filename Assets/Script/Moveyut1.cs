@@ -69,12 +69,12 @@ public class Moveyut1 : MonoBehaviour
         {
             case 0:
                 Debug.Log("boy's turn");
-                GameObject.Find("player1").GetComponent<MapButton>().getResult(resultYut);
+                GameObject.Find("player1_1").GetComponent<ManagePlayer>().getMal(resultYut);
                 turn = 1;
                 break;
             case 1:
                 Debug.Log("girl's turn");
-                GameObject.Find("player2").GetComponent<MapButton>().getResult(resultYut);
+                GameObject.Find("player2_1").GetComponent<ManagePlayer>().getMal(resultYut);
                 turn = 0;
                 break;
             default:
