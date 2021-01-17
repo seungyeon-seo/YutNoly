@@ -6,9 +6,12 @@ using System;
 public class Moveyut1 : MonoBehaviour
 {
     public GameObject yut1;
-    public int resultYut = -1;
+    public List<int> resultYut;
+    int res = -1;
     float rotSpeed = 20.0f;
-    public bool isButton = false;
+    public bool isClicked = false;
+    bool isRotate = false;
+    bool doneTurn = false;
     float t = 0;
     int turn = 0;
 
@@ -16,6 +19,7 @@ public class Moveyut1 : MonoBehaviour
     void Start()
     {
         yut1 = gameObject;
+        resultYut = new List<int>();
     }
 
     // Update is called once per frame
@@ -26,49 +30,66 @@ public class Moveyut1 : MonoBehaviour
 
     public void OnButtonClick()
     {
-        isButton = true;
+        // isClicked = true;
+        doOneTurn();
     }
 
     private void FixedUpdate()
     {
+        if (isRotate)
+        {
+            transform.Rotate(Vector3.up * rotSpeed);
+            t += Time.deltaTime;
+            if (t >= Time.deltaTime * 50)
+            {
+                isRotate = false;
+                t = 0;
+                changeImage();
+                resultYut.Add(res);
+                if (res != 15 && res != 16)
+                    doneTurn = true;
+            }   
+        }
+        if (doneTurn)
+        {
+            doneTurn = false;
+            setResult();
+        }
+    }
+
+    void doOneTurn()
+    {
         RotateYut();
+        // changeImage();
+    }
+
+    void setResult()
+    {
+        switch (turn)
+        {
+            case 0:
+                Debug.Log("boy's turn");
+                GameObject.Find("player1").GetComponent<MapButton>().getResult(resultYut);
+                turn = 1;
+                break;
+            case 1:
+                Debug.Log("girl's turn");
+                GameObject.Find("player2").GetComponent<MapButton>().getResult(resultYut);
+                turn = 0;
+                break;
+            default:
+                Debug.LogError("Wrong Turn");
+                break;
+        }
+        resultYut.Clear();
     }
 
     void RotateYut()
     {
-        if (!isButton)
-            return; 
-        
-        transform.Rotate(Vector3.up * rotSpeed);
-        t += Time.deltaTime;
-      
-        if (t >= Time.deltaTime * 50)
-        {
-            // init variables
-            isButton = false;
-            t = 0;
-
-            // show yuts
-            changeImage();
-            switch (turn)
-            {
-                case 0:
-                    Debug.Log("boy's turn");
-                    GameObject.Find("player1").GetComponent<MapButton>().getResult(resultYut);
-                    turn = 1;
-                    break;
-                case 1:
-                    Debug.Log("girl's turn");
-                    GameObject.Find("player2").GetComponent<MapButton>().getResult(resultYut);
-                    turn = 0;
-                    break;
-                default:
-                    Debug.LogError("Wrong Turn");
-                    break;
-            }
-            
-            resultYut = 0;
-        }
+        isRotate = true;
+        GameObject.Find("yut2").GetComponent<Moveyut2>().RotateYut();
+        GameObject.Find("yut3").GetComponent<Moveyut3>().RotateYut();
+        GameObject.Find("yut4").GetComponent<Moveyut4>().RotateYut();
     }
 
     void changeImage()
@@ -77,10 +98,15 @@ public class Moveyut1 : MonoBehaviour
 
         // calc result
         System.Random r = new System.Random();
-        resultYut = r.Next(1, 17);
-        if (resultYut != 16 && resultYut != 4) //도 개 걸 윷
+        res = r.Next(1, 17);
+        GameObject.Find("yut2").GetComponent<Moveyut2>().changeImage(res);
+        GameObject.Find("yut3").GetComponent<Moveyut3>().changeImage(res);
+        GameObject.Find("yut4").GetComponent<Moveyut4>().changeImage(res);
+
+        if (res != 16 && res != 4) //도 개 걸 윷
             this.gameObject.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("yut2");
         else // 도' 모
             this.gameObject.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("yut1");
+
     }
 }

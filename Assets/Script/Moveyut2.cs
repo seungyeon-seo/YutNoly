@@ -7,8 +7,8 @@ public class Moveyut2 : MonoBehaviour
 {
     public GameObject yut2;
     float rotSpeed = 20.0f;
-    bool isButton = false;
     float t = 0;
+    bool isRotate;
 
     // Start is called before the first frame update
     void Start()
@@ -18,40 +18,32 @@ public class Moveyut2 : MonoBehaviour
 
     public void OnButtonClick()
     {
-        isButton = true;
     }
 
     private void FixedUpdate()
     {
-        RotateYut();
-    }
-
-    void RotateYut()
-    {
-        if (!isButton)
-            return;
-
-        transform.Rotate(Vector3.up * rotSpeed);
-        t += Time.deltaTime;
-
-        if (t >= Time.deltaTime * 50)
+        if (isRotate)
         {
-            // init variables
-            isButton = false;
-            t = 0;
-
-            // show yuts
-            changeImage();
+            transform.Rotate(Vector3.up * rotSpeed);
+            t += Time.deltaTime;
+            if (t >= Time.deltaTime * 50)
+            {
+                isRotate = false;
+                t = 0;
+            }
         }
     }
 
-    void changeImage()
+    public void RotateYut()
+    {
+        isRotate = true;
+    }
+
+    public void changeImage(int res)
     {
         transform.localEulerAngles = new Vector3(-18, 7, 167);
 
         // calc result
-        System.Random r = new System.Random();
-        int res = r.Next(1, 17);
         if ((res>=5 && res<=10) || (res>=11 && res<=14) || res == 15) // 개 걸 윷
             this.gameObject.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("yut2");
         else // 도 도' 모

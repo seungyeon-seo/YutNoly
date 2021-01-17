@@ -21,7 +21,6 @@ public class initKans : MonoBehaviour
             }*/
             Kans.Add(obj1);
             GameObject.Find("Kan_" + i.ToString()).SetActive(false);
-            Debug.Log(obj1.name);
         }
         GameObject.Find("player1").GetComponent<MapButton>().initKans(Kans);
         GameObject.Find("player2").GetComponent<MapButton>().initKans(Kans);
