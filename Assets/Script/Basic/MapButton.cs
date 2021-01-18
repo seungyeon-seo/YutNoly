@@ -70,9 +70,10 @@ public class MapButton : MonoBehaviour
         {
             if (haveToUpdate)
             {
-                Debug.Log("update: " + PlayerPos);
-                updateResult();
+                // updateResult();
+                callGetMal();
                 haveToUpdate = false;
+                isReady = false;
             }
             showButtons();
         } 
@@ -111,11 +112,11 @@ public class MapButton : MonoBehaviour
     {
         if (owner == 1)
         {
-            GameObject.Find("player1").GetComponent<ManagePlayer>().checkPos(gameObject, 1);
+            GameObject.Find("player1_1").GetComponent<ManagePlayer>().checkPos(gameObject, 1);
         }
         else
         {
-            GameObject.Find("player2").GetComponent<ManagePlayer>().checkPos(gameObject, 2);
+            GameObject.Find("player2_1").GetComponent<ManagePlayer>().checkPos(gameObject, 2);
         }
     }
 
@@ -164,7 +165,6 @@ public class MapButton : MonoBehaviour
 
     public void getResult(List<int> res)
     {
-        Debug.Log("res count in getResult (MapButton): " + res.Count);
         int count = res.Count;
         for (int i = 0; i < count; i++)
         {
@@ -404,5 +404,40 @@ public class MapButton : MonoBehaviour
         GameObject startobj = Kans[0];
        
         // obj2.transform.position = startobj.transform.position;
+    }
+
+    void callGetMal()
+    {
+        List<int> res = new List<int>();
+        int count = resYut.Count;
+        for (int i = 0; i<count; i++)
+        {
+            switch (resYut[i].Item1)
+            {
+                case -1:
+                    res.Add(4);
+                    break;
+                case 1:
+                    res.Add(1);
+                    break;
+                case 2:
+                    res.Add(5);
+                    break;
+                case 3:
+                    res.Add(14);
+                    break;
+                case 4:
+                    res.Add(15);
+                    break;
+                case 5:
+                    res.Add(16);
+                    break;
+                case 0:
+                    Debug.LogError("resYut error in callGetMal");
+                    break;
+            }
+        }
+        resYut.Clear();
+        GameObject.Find("player" + owner + "_1").GetComponent<ManagePlayer>().getMal(res);
     }
 }
