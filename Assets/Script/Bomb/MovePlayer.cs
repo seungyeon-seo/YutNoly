@@ -86,6 +86,7 @@ public class MovePlayer : MonoBehaviour
                 if (GameObject.Find("yut5").GetComponent<Bombyut5>().bomb)
                 {
                     GameObject.Find("Kan_"+UpdatePos).GetComponent<BombCheck>().isBomb = true;
+                    GameObject.Find("bomb"+UpdatePos).GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("bomb");
                 }
                 GameObject.Find("yut5").GetComponent<Bombyut5>().bomb = false;
             }
@@ -104,6 +105,7 @@ public class MovePlayer : MonoBehaviour
             // info Text call
             setPosition(0);
             GameObject.Find("Kan_"+ UpdatePos).GetComponent<BombCheck>().isBomb = false;
+            GameObject.Find("bomb" + UpdatePos).GetComponent<SpriteRenderer>().sprite = null;
             return true;
         }
         return false;

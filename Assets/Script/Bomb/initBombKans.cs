@@ -15,6 +15,7 @@ public class initBombKans : MonoBehaviour
             GameObject obj1 = GameObject.Find("Kan_" + i.ToString());
             Kans.Add(obj1);
             GameObject.Find("show_kan" + i.ToString()).GetComponent<SpriteRenderer>().sprite = null;
+            GameObject.Find("bomb" + i.ToString()).GetComponent<SpriteRenderer>().sprite = null;
         }
         GameObject.Find("player1").GetComponent<MovePlayer>().initKans(Kans);
         GameObject.Find("player2").GetComponent<MovePlayer>().initKans(Kans);
