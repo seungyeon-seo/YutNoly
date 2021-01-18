@@ -107,11 +107,11 @@ public class MapButton : MonoBehaviour
     private void checkPos()
     {
         if (owner == 1) {
-            GameObject.Find("player1_1").GetComponent<ManagePlayer>().checkPos(PlayerPos, 0);
+            GameObject.Find("player1_1").GetComponent<ManagePlayer>().checkPos(PlayerPos, 1);
         }
         else
         {
-            GameObject.Find("player2_1").GetComponent<ManagePlayer>().checkPos(PlayerPos, 1);
+            GameObject.Find("player2_1").GetComponent<ManagePlayer>().checkPos(PlayerPos, 2);
         }
     }
 

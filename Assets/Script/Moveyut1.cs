@@ -6,6 +6,7 @@ using System;
 public class Moveyut1 : MonoBehaviour
 {
     public GameObject yut1;
+    GameObject yutResultObj;
     public List<int> resultYut;
     int res = -1;
     float rotSpeed = 20.0f;
@@ -13,13 +14,15 @@ public class Moveyut1 : MonoBehaviour
     bool isRotate = false;
     bool doneTurn = false;
     float t = 0;
-    int turn = 0;
+    int turn = 1;
 
     // Start is called before the first frame update
     void Start()
     {
+        yutResultObj = GameObject.Find("yutResult");
         yut1 = gameObject;
         resultYut = new List<int>();
+        turn = 1;
     }
 
     // Update is called once per frame
@@ -67,18 +70,18 @@ public class Moveyut1 : MonoBehaviour
     {
         switch (turn)
         {
-            case 0:
+            case 1:
                 Debug.Log("boy's turn");
                 GameObject.Find("player1_1").GetComponent<ManagePlayer>().getMal(resultYut);
-                turn = 1;
+                turn = 2;
                 break;
-            case 1:
+            case 2:
                 Debug.Log("girl's turn");
                 GameObject.Find("player2_1").GetComponent<ManagePlayer>().getMal(resultYut);
-                turn = 0;
+                turn = 1;
                 break;
             default:
-                Debug.LogError("Wrong Turn");
+                Debug.LogError("Wrong Turn: " + turn.ToString());
                 break;
         }
         resultYut.Clear();
@@ -90,6 +93,7 @@ public class Moveyut1 : MonoBehaviour
         GameObject.Find("yut2").GetComponent<Moveyut2>().RotateYut();
         GameObject.Find("yut3").GetComponent<Moveyut3>().RotateYut();
         GameObject.Find("yut4").GetComponent<Moveyut4>().RotateYut();
+        yutResultObj.GetComponent<showResult>().setEmpty();
     }
 
     void changeImage()
@@ -102,6 +106,7 @@ public class Moveyut1 : MonoBehaviour
         GameObject.Find("yut2").GetComponent<Moveyut2>().changeImage(res);
         GameObject.Find("yut3").GetComponent<Moveyut3>().changeImage(res);
         GameObject.Find("yut4").GetComponent<Moveyut4>().changeImage(res);
+        GameObject.Find("yutResult").GetComponent<showResult>().setImage(res);
 
         if (res != 16 && res != 4) //도 개 걸 윷
             this.gameObject.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("yut2");
