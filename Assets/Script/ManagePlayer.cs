@@ -111,7 +111,7 @@ public class ManagePlayer : MonoBehaviour
             if (pos == obj.GetComponent<MapButton>().getPosition())
             {
                 Debug.Log(obj.name + "is same pos");
-                obj.GetComponent<MapButton>().setPosition(0);
+                obj.GetComponent<MapButton>().setPosition(-1);
                 obj.GetComponent<MapButton>().catchOther(turn);
             }
         }

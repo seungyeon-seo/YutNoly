@@ -12,6 +12,7 @@ public class MapButton : MonoBehaviour
     List<(int, GameObject)> resYut;
     int PlayerPos;
     Vector2 mousePos2D;
+    Vector2 initPos;
     List<GameObject> Kans;
     int UpdatePos = -1;
     int owner;
@@ -27,8 +28,9 @@ public class MapButton : MonoBehaviour
         // init flags
         isReady = false;
         isClick = false;
-        PlayerPos = 0;
+        PlayerPos = -1;
         resYut = new List<(int, GameObject)>();
+        initPos = gameObject.transform.position;
     }
 
     // Update is called once per frame
@@ -135,7 +137,11 @@ public class MapButton : MonoBehaviour
     {
         PlayerPos = pos;
         Vector2 from = gameObject.transform.position;
-        Vector2 to = Kans[pos].transform.position;
+        Vector2 to;
+        if (pos == -1)
+            to = initPos;
+        else
+            to = Kans[pos].transform.position;
         gameObject.transform.position = Vector2.Lerp(from, to, 10);
     }
 
@@ -201,6 +207,9 @@ public class MapButton : MonoBehaviour
         int NextPos = 0;
         switch (CurPos)
         {
+            case -1:
+                NextPos = res;
+                break;
             case 0:
                 if (res == -1)
                     NextPos = CurPos;
@@ -246,7 +255,7 @@ public class MapButton : MonoBehaviour
                     NextPos = CurPos + res;
                 break;
             case 20: // 종점
-                if (res > 1)
+                if (res >= 1)
                     NextPos = 30;
                 else
                     NextPos = CurPos + res;
@@ -270,6 +279,8 @@ public class MapButton : MonoBehaviour
             case 23: // 가운데
                 if (res >= 4)
                     NextPos = 30;
+                else if (res == -1)
+                    NextPos = 27;
                 else if (res < 3)
                     NextPos = 27 + res;
                 else if (res == 3)
@@ -302,6 +313,8 @@ public class MapButton : MonoBehaviour
             case 27: // 제2대각선 2번째 위치
                 if (res == 1)
                     NextPos = 23;
+                else if (res <= 3 && res > 1)
+                    NextPos = 26 + res;
                 else if (res == 4)
                     NextPos = 20;
                 else if (res == 5)
