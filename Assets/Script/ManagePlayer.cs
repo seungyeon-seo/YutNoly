@@ -7,6 +7,7 @@ public class ManagePlayer : MonoBehaviour
 {
     int owner;
     List<GameObject> players;
+    List<GameObject> winners;
     Vector2 mousePos2D;
     bool isClick = false;
     bool isReady = false;
@@ -27,6 +28,8 @@ public class ManagePlayer : MonoBehaviour
         players.Add(GameObject.Find("player" + owner + "_2"));
         players.Add(GameObject.Find("player" + owner + "_3"));
         players.Add(GameObject.Find("player" + owner + "_4"));
+
+        winners = new List<GameObject>();
     }
 
     // Update is called once per frame
@@ -65,17 +68,18 @@ public class ManagePlayer : MonoBehaviour
     {
         List<GameObject> res = new List<GameObject>();
         bool check = false;
-        for (int i = 0; i < 4; i++)
+       
+        foreach (GameObject player in players)
         {
-            if (players[i].GetComponent<MapButton>().getPosition() != 0)
+            if (player.GetComponent<MapButton>().getPosition() != 0)
             {
-                res.Add(players[i]);
+                res.Add(player);
             }
             else
             {
                 if (!check)
                 {
-                    res.Add(players[i]);
+                    res.Add(player);
                     check = true;
                 }
             }
@@ -128,5 +132,16 @@ public class ManagePlayer : MonoBehaviour
     public List<GameObject> getPlayers()
     {
         return players;
+    }
+
+    public void AddWinner(GameObject win)
+    {
+        winners.Add(win);
+        players.Remove(win);
+
+        if (winners.Count == 4)
+        {
+            Debug.Log("player" + owner + " is WIN!!");
+        }
     }
 }

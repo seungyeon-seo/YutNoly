@@ -92,6 +92,10 @@ public class MapButton : MonoBehaviour
             UpdatePos = Int32.Parse(names[0]);
 
             // init flags
+            if (UpdatePos == 30)
+            {
+                GameObject.Find("player" + owner + "_1").GetComponent<ManagePlayer>().AddWinner(gameObject);
+            }
             isClick = false;
             moveToKan.SetActive(false);
             deleteKan(moveToKan);
