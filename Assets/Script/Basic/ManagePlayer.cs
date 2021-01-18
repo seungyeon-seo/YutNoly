@@ -112,6 +112,7 @@ public class ManagePlayer : MonoBehaviour
             {
                 obj.GetComponent<MapButton>().setPosition(-1);
                 obj.GetComponent<MapButton>().catchOther(turn);
+                GameObject.Find("infoText").GetComponent<InfoText>().setImage(2);
             }
         }
 
