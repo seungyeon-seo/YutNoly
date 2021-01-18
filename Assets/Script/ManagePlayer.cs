@@ -103,16 +103,24 @@ public class ManagePlayer : MonoBehaviour
             // set active true
         }
     }
-    public void checkPos(int pos, int turn)
+    public void checkPos(GameObject obj1, int turn)
     {
-        Debug.Log("in checkPos | my pos is " + pos);
+        int pos = obj1.GetComponent<MapButton>().getPosition();
         foreach (GameObject obj in getOtherPlayers())
         {
             if (pos == obj.GetComponent<MapButton>().getPosition())
             {
-                Debug.Log(obj.name + "is same pos");
                 obj.GetComponent<MapButton>().setPosition(-1);
                 obj.GetComponent<MapButton>().catchOther(turn);
+            }
+        }
+
+        foreach (GameObject obj2 in players)
+        {
+            if (pos == obj2.GetComponent<MapButton>().getPosition())
+            {
+                obj1.GetComponent<MapButton>().attach(obj2);
+                obj2.GetComponent<MapButton>().attach(obj1);
             }
         }
     }

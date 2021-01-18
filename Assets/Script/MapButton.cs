@@ -16,6 +16,7 @@ public class MapButton : MonoBehaviour
     List<GameObject> Kans;
     int UpdatePos = -1;
     int owner;
+    List<GameObject> attachedPlayer;
 
     // Start is called before the first frame update
     void Start()
@@ -31,6 +32,7 @@ public class MapButton : MonoBehaviour
         PlayerPos = -1;
         resYut = new List<(int, GameObject)>();
         initPos = gameObject.transform.position;
+        attachedPlayer = new List<GameObject>();
     }
 
     // Update is called once per frame
@@ -87,7 +89,8 @@ public class MapButton : MonoBehaviour
             Vector2 clickedKan = moveToKan.transform.position;
             Vector2 myPos = gameObject.transform.position;
             obj2.transform.position = Vector2.Lerp(myPos, clickedKan, 10);
-            
+            checkAttach(clickedKan);
+
             // set UpdatePos
             string[] separatingStrings = { "Kan_" };
             string[] names = moveToKan.name.Split(separatingStrings, System.StringSplitOptions.RemoveEmptyEntries);
@@ -106,12 +109,21 @@ public class MapButton : MonoBehaviour
 
     private void checkPos()
     {
-        if (owner == 1) {
-            GameObject.Find("player1_1").GetComponent<ManagePlayer>().checkPos(PlayerPos, 1);
+        if (owner == 1)
+        {
+            GameObject.Find("player1_1").GetComponent<ManagePlayer>().checkPos(gameObject, 1);
         }
         else
         {
-            GameObject.Find("player2_1").GetComponent<ManagePlayer>().checkPos(PlayerPos, 2);
+            GameObject.Find("player2_1").GetComponent<ManagePlayer>().checkPos(gameObject, 2);
+        }
+    }
+
+    void checkAttach(Vector2 pos)
+    {
+        foreach (GameObject obj in attachedPlayer)
+        {
+            obj.transform.position = pos;
         }
     }
 
@@ -126,6 +138,11 @@ public class MapButton : MonoBehaviour
         haveToUpdate = false;
 
         GameObject.Find("yut").GetComponent<Moveyut1>().callDoOneTurn(turn, res);
+    }
+
+    public void attach(GameObject obj2)
+    {
+        attachedPlayer.Add(obj2);
     }
 
     public int getPosition()
