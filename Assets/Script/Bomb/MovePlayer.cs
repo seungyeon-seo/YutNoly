@@ -14,6 +14,7 @@ public class MovePlayer : MonoBehaviour
     Vector2 mousePos2D;
     List<GameObject> Kans;
     int UpdatePos = -1;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -74,21 +75,52 @@ public class MovePlayer : MonoBehaviour
             Vector2 myPos = gameObject.transform.position;
             obj2.transform.position = Vector2.Lerp(myPos, clickedKan, 10);
 
-            // set UpdatePos
+            // set UpdatePos`
             string[] separatingStrings = { "Kan_" };
             string[] names = moveToKan.name.Split(separatingStrings, System.StringSplitOptions.RemoveEmptyEntries);
+            Debug.Log("names[0]: "+names[0]);
             UpdatePos = Int32.Parse(names[0]);
+
+            // set Bomb
+            if (!checkBomb())
+            {
+                if (GameObject.Find("yut5").GetComponent<Bombyut5>().bomb)
+                {
+                    Debug.Log("set bomb obj: Kan_" + UpdatePos);
+                    GameObject.Find("Kan_"+UpdatePos).GetComponent<BombCheck>().isBomb = true;
+                    Debug.Log("MUST true: " + GameObject.Find("Kan_" + UpdatePos).GetComponent<BombCheck>().isBomb);
+                }
+                GameObject.Find("yut5").GetComponent<Bombyut5>().bomb = false;
+            }
+
             // init flags
             isClick = false;
-            moveToKan.SetActive(false);
+            GameObject.Find("show_kan" + UpdatePos).GetComponent<SpriteRenderer>().sprite = null;
             deleteKan(moveToKan);
         }
+    }
+
+    public bool checkBomb()
+    {
+        Debug.Log("checkBomb obj: Kan_" + UpdatePos.ToString());
+        if (GameObject.Find("Kan_" + UpdatePos.ToString()).GetComponent<BombCheck>().isBomb)
+        {
+            Debug.Log("BOMB!!");
+            // info Text call
+            setPosition(0);
+            GameObject.Find("Kan_"+ UpdatePos).GetComponent<BombCheck>().isBomb = false;
+            Debug.Log("CHECK BOMB");
+            return true;
+        }
+        Debug.Log("CHECK BOMB");
+        return false;
     }
 
     private void checkPos()
     {
         GameObject other;
-        int turn;
+        int turn;                                      
+       
         if (gameObject.name == "player1")
         {
             other = GameObject.Find("player2");
@@ -322,7 +354,11 @@ public class MovePlayer : MonoBehaviour
     {
         int count = resYut.Count;
         for (int i = 0; i < count; i++)
-            resYut[i].Item2.SetActive(false);
+        {
+            string[] separatingStrings = { "Kan_" };
+            string[] names = resYut[i].Item2.name.Split(separatingStrings, System.StringSplitOptions.RemoveEmptyEntries);
+            GameObject.Find("show_kan" + names[0]).GetComponent<SpriteRenderer>().sprite = null;
+        }
     }
     void deleteKan(GameObject toDelete)
     {
@@ -342,7 +378,11 @@ public class MovePlayer : MonoBehaviour
         int count = resYut.Count;
         for (int i = 0; i < count; i++)
         {
-            resYut[i].Item2.SetActive(true);
+            Debug.Log("must Kan_N: " + resYut[i].Item2.name);
+            string[] separatingStrings = { "Kan_" };
+            string[] names = resYut[i].Item2.name.Split(separatingStrings, System.StringSplitOptions.RemoveEmptyEntries);
+            Debug.Log("showButtons (show_kanN): " + names[0]);
+            GameObject.Find("show_kan" + names[0]).GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("show_kan");
         }
     }
     public void initKans(List<GameObject> kans)

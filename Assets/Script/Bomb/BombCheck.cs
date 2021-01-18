@@ -1,15 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using static System.Net.Mime.MediaTypeNames;
 
-public class playGame : MonoBehaviour
+public class BombCheck : MonoBehaviour
 {
+    public bool isBomb;
     // Start is called before the first frame update
     void Start()
     {
-        
+        isBomb = false;
     }
 
     // Update is called once per frame
@@ -17,10 +16,4 @@ public class playGame : MonoBehaviour
     {
         
     }
-
-    public void clickSubmitButton()
-    {
-        SceneManager.LoadScene("BasicYut");
-    }
-
 }

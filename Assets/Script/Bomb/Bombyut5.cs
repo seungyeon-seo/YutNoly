@@ -2,17 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bombyut4 : MonoBehaviour
+public class Bombyut5 : MonoBehaviour
 {
-    public GameObject yut4;
+    bool isRotate;
     float rotSpeed = 20.0f;
     float t = 0;
-    bool isRotate;
+    public bool bomb;
 
     // Start is called before the first frame update
     void Start()
     {
-        yut4 = gameObject;
+        isRotate = false;
+        bomb = false;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
     }
 
     private void FixedUpdate()
@@ -34,13 +41,23 @@ public class Bombyut4 : MonoBehaviour
         isRotate = true;
     }
 
-    public void changeImage(int res)
+    public void changeImage()
     {
         transform.localEulerAngles = new Vector3(-18, 7, 167);
 
-        if (res == 15 || res == 4) // 도' 윷
-            this.gameObject.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("yut3");
-        else // 도 개 걸 모
+        System.Random r = new System.Random();
+        int res = r.Next(1, 3);
+
+        if (res == 1)
+        {
             this.gameObject.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("yut1");
+            bomb = false;
+        }
+        else if (res == 2) // set bomb
+        {
+            this.gameObject.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("yut4");
+            bomb = true;
+        }
+
     }
 }
