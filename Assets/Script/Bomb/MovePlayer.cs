@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MapButton : MonoBehaviour
+public class MovePlayer : MonoBehaviour
 {
     GameObject obj2 = null;
     bool isReady;
@@ -12,46 +12,33 @@ public class MapButton : MonoBehaviour
     List<(int, GameObject)> resYut;
     int PlayerPos;
     Vector2 mousePos2D;
-    Vector2 initPos;
     List<GameObject> Kans;
     int UpdatePos = -1;
-    int owner;
-    List<GameObject> attachedPlayer;
-
     // Start is called before the first frame update
     void Start()
     {
-        // set type
-        string[] separatingStrings = { "player", "_" };
-        string[] str = gameObject.name.Split(separatingStrings, System.StringSplitOptions.RemoveEmptyEntries);
-        owner = Int32.Parse(str[0]);
-
         // init flags
         isReady = false;
         isClick = false;
-        PlayerPos = -1;
+        PlayerPos = 0;
         resYut = new List<(int, GameObject)>();
-        initPos = gameObject.transform.position;
-        attachedPlayer = new List<GameObject>();
     }
-
     // Update is called once per frame
     void Update()
     {
         // TODO: button's on click 이용해야함
-        if (Input.GetMouseButtonDown(0)) {
+        if (Input.GetMouseButtonDown(0))
+        {
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mousePos2D = new Vector2(mousePos.x, mousePos.y);
             if (isReady)
                 isClick = true;
         }
     }
-
     private void FixedUpdate()
     {
         if (!isReady)
             return;
-
         else if (isReady && isClick)
         {
             moveTo();
@@ -65,17 +52,15 @@ public class MapButton : MonoBehaviour
             }
             haveToUpdate = true;
         }
-
         else // isReady만 true
         {
             if (haveToUpdate)
             {
-                Debug.Log("update: " + PlayerPos);
                 updateResult();
                 haveToUpdate = false;
             }
             showButtons();
-        } 
+        }
     }
 
     void moveTo()
@@ -84,23 +69,16 @@ public class MapButton : MonoBehaviour
         if (hit.collider != null)
         {
             // move to clicked kan
-            Debug.Log(hit.collider.gameObject.name);
             GameObject moveToKan = hit.collider.gameObject;
             Vector2 clickedKan = moveToKan.transform.position;
             Vector2 myPos = gameObject.transform.position;
             obj2.transform.position = Vector2.Lerp(myPos, clickedKan, 10);
-            checkAttach(clickedKan);
 
             // set UpdatePos
             string[] separatingStrings = { "Kan_" };
             string[] names = moveToKan.name.Split(separatingStrings, System.StringSplitOptions.RemoveEmptyEntries);
             UpdatePos = Int32.Parse(names[0]);
-
             // init flags
-            if (UpdatePos == 30)
-            {
-                GameObject.Find("player" + owner + "_1").GetComponent<ManagePlayer>().AddWinner(gameObject);
-            }
             isClick = false;
             moveToKan.SetActive(false);
             deleteKan(moveToKan);
@@ -109,26 +87,24 @@ public class MapButton : MonoBehaviour
 
     private void checkPos()
     {
-        if (owner == 1)
+        GameObject other;
+        int turn;
+        if (gameObject.name == "player1")
         {
-            GameObject.Find("player1_1").GetComponent<ManagePlayer>().checkPos(gameObject, 1);
+            other = GameObject.Find("player2");
+            turn = 0;
         }
         else
         {
-            GameObject.Find("player2_1").GetComponent<ManagePlayer>().checkPos(gameObject, 2);
+            other = GameObject.Find("player1");
+            turn = 1;
         }
-    }
+        if (PlayerPos != other.GetComponent<MovePlayer>().getPosition())
+            return;
 
-    void checkAttach(Vector2 pos)
-    {
-        foreach (GameObject obj in attachedPlayer)
-        {
-            obj.transform.position = pos;
-        }
-    }
+        other.GetComponent<MovePlayer>().setPosition(0);
 
-    public void catchOther(int turn)
-    {
+        // set res for parameter of callDoOneTurn
         List<int> res = new List<int>();
         int count = resYut.Count;
         for (int i = 0; i < count; i++)
@@ -137,12 +113,7 @@ public class MapButton : MonoBehaviour
         }
         haveToUpdate = false;
 
-        GameObject.Find("yut").GetComponent<Moveyut1>().callDoOneTurn(turn, res);
-    }
-
-    public void attach(GameObject obj2)
-    {
-        attachedPlayer.Add(obj2);
+        GameObject.Find("yut").GetComponent<BombYut1>().callDoOneTurn(turn, res);
     }
 
     public int getPosition()
@@ -154,17 +125,11 @@ public class MapButton : MonoBehaviour
     {
         PlayerPos = pos;
         Vector2 from = gameObject.transform.position;
-        Vector2 to;
-        if (pos == -1)
-            to = initPos;
-        else
-            to = Kans[pos].transform.position;
+        Vector2 to = Kans[pos].transform.position;
         gameObject.transform.position = Vector2.Lerp(from, to, 10);
     }
-
     public void getResult(List<int> res)
     {
-        Debug.Log("res count in getResult (MapButton): " + res.Count);
         int count = res.Count;
         for (int i = 0; i < count; i++)
         {
@@ -173,6 +138,7 @@ public class MapButton : MonoBehaviour
                 case 1:
                 case 2:
                 case 3:
+                    //resYut.Add((1, null));
                     resYut.Add((1, Kans[calcNextPos(1)]));
                     break;
                 case 4:
@@ -206,27 +172,22 @@ public class MapButton : MonoBehaviour
         }
         isReady = true;
     }
-
     void updateResult()
     {
         List<(int, GameObject)> update = new List<(int, GameObject)>();
         int count = resYut.Count;
-        for (int i = 0; i <count; i++)
+        for (int i = 0; i < count; i++)
         {
             update.Add((resYut[i].Item1, Kans[calcNextPos(resYut[i].Item1)]));
         }
         resYut = update;
     }
-
     public int calcNextPos(int res)
     {
         int CurPos = PlayerPos;
         int NextPos = 0;
         switch (CurPos)
         {
-            case -1:
-                NextPos = res;
-                break;
             case 0:
                 if (res == -1)
                     NextPos = CurPos;
@@ -240,7 +201,7 @@ public class MapButton : MonoBehaviour
                     NextPos = CurPos * 4 + res;
                 break;
             case 10: // 두번째 꼭짓점
-                if (res != 3 && res <= 5 && res >0)
+                if (res != 3 && res <= 5 && res > 0)
                     NextPos = 25 + res;
                 else if (res == 3)
                     NextPos = 23;
@@ -272,7 +233,7 @@ public class MapButton : MonoBehaviour
                     NextPos = CurPos + res;
                 break;
             case 20: // 종점
-                if (res >= 1)
+                if (res > 1)
                     NextPos = 30;
                 else
                     NextPos = CurPos + res;
@@ -280,7 +241,6 @@ public class MapButton : MonoBehaviour
             case 21: // 제1대각선 1번째 위치
                 if (res == 5)
                     NextPos = 15;
-
                 else if (res == -1)
                     NextPos = 5;
                 else
@@ -292,12 +252,9 @@ public class MapButton : MonoBehaviour
                 else
                     NextPos = CurPos + res;
                 break;
-
             case 23: // 가운데
                 if (res >= 4)
                     NextPos = 30;
-                else if (res == -1)
-                    NextPos = 27;
                 else if (res < 3)
                     NextPos = 27 + res;
                 else if (res == 3)
@@ -330,8 +287,6 @@ public class MapButton : MonoBehaviour
             case 27: // 제2대각선 2번째 위치
                 if (res == 1)
                     NextPos = 23;
-                else if (res <= 3 && res > 1)
-                    NextPos = 26 + res;
                 else if (res == 4)
                     NextPos = 20;
                 else if (res == 5)
@@ -357,22 +312,18 @@ public class MapButton : MonoBehaviour
                 else
                     NextPos = CurPos + res;
                 break;
-
             default:
                 NextPos = CurPos + res;
                 break;
-
         }
         return NextPos;
     }
-
     void unableKans()
     {
         int count = resYut.Count;
         for (int i = 0; i < count; i++)
             resYut[i].Item2.SetActive(false);
     }
-
     void deleteKan(GameObject toDelete)
     {
         int count = resYut.Count;
@@ -386,23 +337,19 @@ public class MapButton : MonoBehaviour
         }
         Debug.LogError("Try to delete wrong Kan");
     }
-
     public void showButtons()
     {
-        // Debug.Log("show Buttons in MapButton");
         int count = resYut.Count;
         for (int i = 0; i < count; i++)
         {
             resYut[i].Item2.SetActive(true);
         }
     }
-
     public void initKans(List<GameObject> kans)
     {
         Kans = kans;
         obj2 = gameObject;
         GameObject startobj = Kans[0];
-       
-        // obj2.transform.position = startobj.transform.position;
+        obj2.transform.position = startobj.transform.position;
     }
 }
