@@ -18,9 +18,14 @@ public class playGame : MonoBehaviour
         
     }
 
-    public void clickSubmitButton()
+    public void clickBasicButton()
     {
         SceneManager.LoadScene("BasicYut");
+    }
+
+    public void clickBombButton()
+    {
+        SceneManager.LoadScene("BombYut");
     }
 
 }
