@@ -9,11 +9,13 @@ public class MovePlayer : MonoBehaviour
     bool isReady;
     bool isClick;
     bool haveToUpdate;
+    bool bombed;
     List<(int, GameObject)> resYut;
     int PlayerPos;
     Vector2 mousePos2D;
     List<GameObject> Kans;
-    int UpdatePos = -1;
+    int UpdatePos = 0;
+    Vector2 initPos;
 
     // Start is called before the first frame update
     void Start()
@@ -23,6 +25,7 @@ public class MovePlayer : MonoBehaviour
         isClick = false;
         PlayerPos = 0;
         resYut = new List<(int, GameObject)>();
+        initPos = gameObject.transform.position;
     }
     // Update is called once per frame
     void Update()
@@ -44,6 +47,7 @@ public class MovePlayer : MonoBehaviour
         {
             moveTo();
             PlayerPos = UpdatePos;
+            Debug.Log("before unableKans, resYut count: " + resYut.Count);
             unableKans();
             checkPos();
             if (resYut.Count == 0)
@@ -71,15 +75,22 @@ public class MovePlayer : MonoBehaviour
         {
             // move to clicked kan
             GameObject moveToKan = hit.collider.gameObject;
+            Debug.Log("Move to " + moveToKan.name);
             Vector2 clickedKan = moveToKan.transform.position;
             Vector2 myPos = gameObject.transform.position;
             obj2.transform.position = Vector2.Lerp(myPos, clickedKan, 10);
 
-            // set UpdatePos`
+            // set UpdatePos
             string[] separatingStrings = { "Kan_" };
             string[] names = moveToKan.name.Split(separatingStrings, System.StringSplitOptions.RemoveEmptyEntries);
             UpdatePos = Int32.Parse(names[0]);
 
+            // init flags
+            isClick = false;
+            GameObject.Find("show_kan" + UpdatePos).GetComponent<SpriteRenderer>().sprite = null;
+            deleteKan(moveToKan); // resyut remove
+            Debug.Log("init flags after bomb");
+            
             // set Bomb
             if (!checkBomb())
             {
@@ -90,11 +101,6 @@ public class MovePlayer : MonoBehaviour
                 }
                 GameObject.Find("yut5").GetComponent<Bombyut5>().bomb = false;
             }
-
-            // init flags
-            isClick = false;
-            GameObject.Find("show_kan" + UpdatePos).GetComponent<SpriteRenderer>().sprite = null;
-            deleteKan(moveToKan);
         }
     }
 
@@ -103,9 +109,12 @@ public class MovePlayer : MonoBehaviour
         if (GameObject.Find("Kan_" + UpdatePos.ToString()).GetComponent<BombCheck>().isBomb)
         {
             // info Text call
+            bombed = true;
             setPosition(0);
             GameObject.Find("Kan_"+ UpdatePos).GetComponent<BombCheck>().isBomb = false;
+            Debug.Log("remove Bomb" + UpdatePos + " image");
             GameObject.Find("bomb" + UpdatePos).GetComponent<SpriteRenderer>().sprite = null;
+            UpdatePos = 0;
             return true;
         }
         return false;
@@ -114,7 +123,12 @@ public class MovePlayer : MonoBehaviour
     private void checkPos()
     {
         GameObject other;
-        int turn;                                      
+        int turn;                  
+        if (bombed)
+        {
+            bombed = false;
+            return;
+        }
        
         if (gameObject.name == "player1")
         {
@@ -152,7 +166,11 @@ public class MovePlayer : MonoBehaviour
     {
         PlayerPos = pos;
         Vector2 from = gameObject.transform.position;
-        Vector2 to = Kans[pos].transform.position;
+        Vector2 to;
+        if (pos == 0)
+            to = initPos;
+        else
+            to = Kans[pos].transform.position;
         gameObject.transform.position = Vector2.Lerp(from, to, 10);
     }
     public void getResult(List<int> res)
@@ -259,7 +277,7 @@ public class MovePlayer : MonoBehaviour
                     NextPos = CurPos + res;
                 break;
             case 20: // 종점
-                if (res > 1)
+                if (res >= 1)
                     NextPos = 30;
                 else
                     NextPos = CurPos + res;
@@ -281,6 +299,8 @@ public class MovePlayer : MonoBehaviour
             case 23: // 가운데
                 if (res >= 4)
                     NextPos = 30;
+                else if (res == -1)
+                    NextPos = 27;
                 else if (res < 3)
                     NextPos = 27 + res;
                 else if (res == 3)
@@ -313,6 +333,8 @@ public class MovePlayer : MonoBehaviour
             case 27: // 제2대각선 2번째 위치
                 if (res == 1)
                     NextPos = 23;
+                else if (res <= 3 && res > 1)
+                    NextPos = 26 + res;
                 else if (res == 4)
                     NextPos = 20;
                 else if (res == 5)
@@ -365,7 +387,6 @@ public class MovePlayer : MonoBehaviour
                 return;
             }
         }
-        Debug.LogError("Try to delete wrong Kan");
     }
     public void showButtons()
     {
