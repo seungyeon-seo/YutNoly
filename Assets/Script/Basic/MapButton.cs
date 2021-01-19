@@ -205,7 +205,9 @@ public class MapButton : MonoBehaviour
                     break;
                 case 4:
                     if (PlayerPos != 0 || resYut.Count != 0)
-                        resYut.Add((-1, Kans[calcNextPos(-1)]));
+                        resYut.Add((-1, Kans[calcNextPos(-1)]));                    
+                    else
+                        GameObject.Find("yut").GetComponent<Moveyut1>().setTurnImage2();
                     break;
                 case 5:
                 case 6:
@@ -273,7 +275,9 @@ public class MapButton : MonoBehaviour
                     NextPos = CurPos * 4 + res;
                 break;
             case 10: // 두번째 꼭짓점
-                if (res != 3 && res <= 5 && res >0)
+                if (res <= 5 && res >= 4)
+                    NextPos = 24 + res;
+                else if (res <= 2 && res >= 1)
                     NextPos = 25 + res;
                 else if (res == 3)
                     NextPos = 23;

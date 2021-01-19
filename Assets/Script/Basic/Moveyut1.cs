@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.UI;
 
 public class Moveyut1 : MonoBehaviour
 {
@@ -133,5 +134,14 @@ public class Moveyut1 : MonoBehaviour
             GameObject.Find("turn2").GetComponent<SpriteRenderer>().sprite = null;
         else
             GameObject.Find("turn1").GetComponent<SpriteRenderer>().sprite = null;
+    }
+
+    public void setTurnImage2()
+    {
+        if (turn == 1)
+            turn = 2;
+        else
+            turn = 1;
+        setTurnImage();
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ManagePlayer : MonoBehaviour
 {
@@ -30,6 +31,7 @@ public class ManagePlayer : MonoBehaviour
         players.Add(GameObject.Find("player" + owner + "_4"));
 
         winners = new List<GameObject>();
+        GameObject.Find("WinView").GetComponent<SpriteRenderer>().sprite = null;
     }
 
     // Update is called once per frame
@@ -196,7 +198,7 @@ public class ManagePlayer : MonoBehaviour
 
     public void AddWinner(GameObject win)
     {
-        winners.Add(win); 
+        winners.Add(win);
         players.Remove(win);
         setImageNull(win);
 
@@ -210,7 +212,16 @@ public class ManagePlayer : MonoBehaviour
 
         if (winners.Count == 4)
         {
-            Debug.Log("player" + owner + " is WIN!!");
+            // image set
+            GameObject.Find("WinView").GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("win" + owner);
+
+            // name set
+            string str;
+            if (owner == 1)
+                str = getBoyName.input;
+            else
+                str = getGirlName.input;
+            GameObject.Find("winuser").GetComponent<Text>().text = str;
         }
     }
 
