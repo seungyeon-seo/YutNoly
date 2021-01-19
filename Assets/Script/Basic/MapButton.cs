@@ -440,4 +440,14 @@ public class MapButton : MonoBehaviour
         resYut.Clear();
         GameObject.Find("player" + owner + "_1").GetComponent<ManagePlayer>().getMal(res);
     }
+
+    public void clearAttach()
+    {
+        attachedPlayer.Clear();
+    }
+
+    public List<GameObject> getAttach()
+    {
+        return attachedPlayer;
+    }
 }

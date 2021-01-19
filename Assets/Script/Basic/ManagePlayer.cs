@@ -111,6 +111,7 @@ public class ManagePlayer : MonoBehaviour
             if (pos == obj.GetComponent<MapButton>().getPosition())
             {
                 obj.GetComponent<MapButton>().setPosition(-1);
+                clearAttach(obj);
                 obj.GetComponent<MapButton>().catchOther(turn);
                 GameObject.Find("infoText").GetComponent<InfoText>().setImage(2);
             }
@@ -123,6 +124,16 @@ public class ManagePlayer : MonoBehaviour
                 obj1.GetComponent<MapButton>().attach(obj2);
                 obj2.GetComponent<MapButton>().attach(obj1);
             }
+        }
+    }
+
+    public void clearAttach(GameObject obj)
+    {
+        List<GameObject> att = obj.GetComponent<MapButton>().getAttach();
+        obj.GetComponent<MapButton>().clearAttach();
+        foreach (GameObject oj in att)
+        {
+            oj.GetComponent<MapButton>().clearAttach();
         }
     }
 
