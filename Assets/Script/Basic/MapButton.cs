@@ -14,7 +14,7 @@ public class MapButton : MonoBehaviour
     Vector2 mousePos2D;
     Vector2 initPos;
     List<GameObject> Kans;
-    int UpdatePos = -1;
+    int UpdatePos = 0;
     int owner;
     List<GameObject> attachedPlayer;
 
@@ -29,7 +29,7 @@ public class MapButton : MonoBehaviour
         // init flags
         isReady = false;
         isClick = false;
-        PlayerPos = -1;
+        PlayerPos = 0;
         resYut = new List<(int, GameObject)>();
         initPos = gameObject.transform.position;
         attachedPlayer = new List<GameObject>();
@@ -174,7 +174,7 @@ public class MapButton : MonoBehaviour
         PlayerPos = pos;
         Vector2 from = gameObject.transform.position;
         Vector2 to;
-        if (pos == -1)
+        if (pos == 0)
             to = initPos;
         else
             to = Kans[pos].transform.position;
@@ -194,7 +194,7 @@ public class MapButton : MonoBehaviour
                     resYut.Add((1, Kans[calcNextPos(1)]));
                     break;
                 case 4:
-                    if (PlayerPos != -1)
+                    if (PlayerPos != 0)
                         resYut.Add((-1, Kans[calcNextPos(-1)]));
                     break;
                 case 5:
@@ -244,9 +244,6 @@ public class MapButton : MonoBehaviour
         int NextPos = 0;
         switch (CurPos)
         {
-            case -1:
-                NextPos = res;
-                break;
             case 0:
                 if (res == -1)
                     NextPos = CurPos;

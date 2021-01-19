@@ -111,7 +111,7 @@ public class ManagePlayer : MonoBehaviour
             if (pos == obj.GetComponent<MapButton>().getPosition())
             {
                 Debug.Log("catch!");
-                obj.GetComponent<MapButton>().setPosition(-1);
+                obj.GetComponent<MapButton>().setPosition(0);
                 clearAttach(obj);
                 obj.GetComponent<MapButton>().catchOther(turn);
                 GameObject.Find("infoText").GetComponent<InfoText>().setImage(2);
@@ -167,8 +167,15 @@ public class ManagePlayer : MonoBehaviour
 
     public void AddWinner(GameObject win)
     {
-        winners.Add(win);
+        winners.Add(win); 
         players.Remove(win);
+
+        List<GameObject> att = win.GetComponent<MapButton>().getAttach();
+        foreach (GameObject obj in att)
+        {
+            winners.Add(obj);
+            players.Remove(obj);
+        }
 
         if (winners.Count == 4)
         {
