@@ -13,7 +13,7 @@ public class BombYut1 : MonoBehaviour
     bool isRotate = false;
     bool doneTurn = false;
     float t = 0;
-    int turn = 0;
+    int turn = 1;
 
     // Start is called before the first frame update
     void Start()
@@ -22,7 +22,7 @@ public class BombYut1 : MonoBehaviour
         yut1 = gameObject;
         resultYut = new List<int>();
         GameObject.Find("WinView").GetComponent<SpriteRenderer>().sprite = null;
-
+        GameObject.Find("turn2").GetComponent<SpriteRenderer>().sprite = null;
     }
     // Update is called once per frame
     void Update()
@@ -64,15 +64,15 @@ public class BombYut1 : MonoBehaviour
     {
         switch (turn)
         {
-            case 0:
+            case 1:
                 Debug.Log("boy's turn");
                 GameObject.Find("player1").GetComponent<MovePlayer>().getResult(resultYut);
-                turn = 1;
+                turn = 2;
                 break;
-            case 1:
+            case 2:
                 Debug.Log("girl's turn");
                 GameObject.Find("player2").GetComponent<MovePlayer>().getResult(resultYut);
-                turn = 0;
+                turn = 1;
                 break;
             default:
                 Debug.LogError("Wrong Turn");
@@ -112,5 +112,23 @@ public class BombYut1 : MonoBehaviour
     {
         resultYut = res;
         turn = t;
+    }
+
+    public void setTurnImage()
+    {
+        GameObject.Find("turn" + turn).GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("highlight");
+        if (turn == 1)
+            GameObject.Find("turn2").GetComponent<SpriteRenderer>().sprite = null;
+        else
+            GameObject.Find("turn1").GetComponent<SpriteRenderer>().sprite = null;
+    }
+
+    public void setTurnImage2()
+    {
+        if (turn == 1)
+            turn = 2;
+        else
+            turn = 1;
+        setTurnImage();
     }
 }

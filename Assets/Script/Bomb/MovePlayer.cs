@@ -57,6 +57,7 @@ public class MovePlayer : MonoBehaviour
             if (resYut.Count == 0)
             {
                 isReady = false;
+                GameObject.Find("yut").GetComponent<BombYut1>().setTurnImage();
                 return;
             }
             haveToUpdate = true;
@@ -205,8 +206,8 @@ public class MovePlayer : MonoBehaviour
                 case 4:
                     if (PlayerPos != 0 || resYut.Count != 0)
                         resYut.Add((-1, Kans[calcNextPos(-1)]));
-                    //else
-                        //GameObject.Find("yut").GetComponent<BombYut1>().setTurnImage2();
+                    else
+                        GameObject.Find("yut").GetComponent<BombYut1>().setTurnImage2();
                     break;
                 case 5:
                 case 6:
@@ -271,7 +272,9 @@ public class MovePlayer : MonoBehaviour
                     NextPos = CurPos * 4 + res;
                 break;
             case 10: // 두번째 꼭짓점
-                if (res != 3 && res <= 5 && res > 0)
+                if (res <= 5 && res >= 4)
+                    NextPos = 24 + res;
+                else if (res <= 2 && res >= 1)
                     NextPos = 25 + res;
                 else if (res == 3)
                     NextPos = 23;
@@ -353,8 +356,8 @@ public class MovePlayer : MonoBehaviour
                     NextPos = 20;
                 else if (res == -1)
                     NextPos = 10;
-                else
-                    NextPos = CurPos + res;
+                else if (res >= 3 && res <= 4)
+                    NextPos = CurPos + res - 1;
                 break;
             case 27: // 제2대각선 2번째 위치
                 if (res == 1)
