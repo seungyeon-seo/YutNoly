@@ -253,7 +253,7 @@ public class MovePlayer : MonoBehaviour
                 break;
             case 1:
                 if (res == -1)
-                    NextPos = 29;
+                    NextPos = 20;
                 else
                     NextPos = CurPos + res;
                 break;
