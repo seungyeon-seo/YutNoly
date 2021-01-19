@@ -202,7 +202,7 @@ public class MapButton : MonoBehaviour
                     resYut.Add((1, Kans[calcNextPos(1)]));
                     break;
                 case 4:
-                    if (PlayerPos != 0)
+                    if (PlayerPos != 0 || resYut.Count != 0)
                         resYut.Add((-1, Kans[calcNextPos(-1)]));
                     break;
                 case 5:
@@ -231,7 +231,7 @@ public class MapButton : MonoBehaviour
             }
             Debug.Log("get result from move yut1: " + res + " " + resYut);
         }
-        if (resYut.Count != 0)
+        if (resYut.Count != 0 || resYut.Count != 0)
             isReady = true;
     }
 
