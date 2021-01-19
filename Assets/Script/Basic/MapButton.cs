@@ -62,6 +62,8 @@ public class MapButton : MonoBehaviour
             if (resYut.Count == 0)
             {
                 isReady = false;
+                Debug.Log("Result Yut is ZERO");
+                GameObject.Find("yut").GetComponent<Moveyut1>().setTurnImage();
                 return;
             }
             haveToUpdate = true;

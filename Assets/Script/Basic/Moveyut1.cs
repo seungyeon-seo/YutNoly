@@ -23,6 +23,8 @@ public class Moveyut1 : MonoBehaviour
         yut1 = gameObject;
         resultYut = new List<int>();
         turn = 1;
+        GameObject.Find("turn1").GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("highlight");
+        GameObject.Find("turn2").GetComponent<SpriteRenderer>().sprite = null;
     }
 
     // Update is called once per frame
@@ -121,5 +123,15 @@ public class Moveyut1 : MonoBehaviour
     {
         resultYut = res;
         turn = t;
+    }
+
+    public void setTurnImage()
+    {
+        Debug.Log("setTurnImage is called");
+        GameObject.Find("turn" + turn).GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("highlight");
+        if (turn == 1)
+            GameObject.Find("turn2").GetComponent<SpriteRenderer>().sprite = null;
+        else
+            GameObject.Find("turn1").GetComponent<SpriteRenderer>().sprite = null;
     }
 }
