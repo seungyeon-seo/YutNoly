@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class MovePlayer : MonoBehaviour
 {
-    GameObject obj2 = null;
     bool isReady;
     bool isClick;
     bool haveToUpdate;
@@ -26,6 +25,7 @@ public class MovePlayer : MonoBehaviour
         PlayerPos = 0;
         resYut = new List<(int, GameObject)>();
         initPos = gameObject.transform.position;
+        Debug.Log("initPos is " + initPos.ToString());
     }
     // Update is called once per frame
     void Update()
@@ -78,7 +78,7 @@ public class MovePlayer : MonoBehaviour
             Debug.Log("Move to " + moveToKan.name);
             Vector2 clickedKan = moveToKan.transform.position;
             Vector2 myPos = gameObject.transform.position;
-            obj2.transform.position = Vector2.Lerp(myPos, clickedKan, 10);
+            gameObject.transform.position = Vector2.Lerp(myPos, clickedKan, 10);
 
             // set UpdatePos
             string[] separatingStrings = { "Kan_" };
@@ -94,10 +94,13 @@ public class MovePlayer : MonoBehaviour
             // set Bomb
             if (!checkBomb())
             {
+                if (UpdatePos == 30)
+                    return;
                 if (GameObject.Find("yut5").GetComponent<Bombyut5>().bomb)
                 {
                     GameObject.Find("Kan_"+UpdatePos).GetComponent<BombCheck>().isBomb = true;
-                    GameObject.Find("bomb"+UpdatePos).GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("bomb");
+                    if (UpdatePos != 0)
+                        GameObject.Find("bomb" + UpdatePos).GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("bomb");
                 }
                 GameObject.Find("yut5").GetComponent<Bombyut5>().bomb = false;
             }
@@ -164,6 +167,7 @@ public class MovePlayer : MonoBehaviour
 
     public void setPosition(int pos)
     {
+        Debug.Log("set position is called with pos " + pos);
         PlayerPos = pos;
         Vector2 from = gameObject.transform.position;
         Vector2 to;
@@ -395,14 +399,12 @@ public class MovePlayer : MonoBehaviour
         {
             string[] separatingStrings = { "Kan_" };
             string[] names = resYut[i].Item2.name.Split(separatingStrings, System.StringSplitOptions.RemoveEmptyEntries);
-            GameObject.Find("show_kan" + names[0]).GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("show_kan");
+            if (names[0] != "0")
+                GameObject.Find("show_kan" + names[0]).GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("show_kan");
         }
     }
     public void initKans(List<GameObject> kans)
     {
         Kans = kans;
-        obj2 = gameObject;
-        GameObject startobj = Kans[0];
-        obj2.transform.position = startobj.transform.position;
     }
 }
