@@ -92,17 +92,9 @@ public class ManagePlayer : MonoBehaviour
         for (int i = 0; i < yut.Count; i++)
             yutInfo.Add(yut[i]);
         List<GameObject> movable = getMovable();
-        showEffect(movable);
         isReady = true;
     }
 
-    void showEffect(List<GameObject> objs)
-    {
-        foreach (GameObject obj in objs)
-        {
-            // set active true
-        }
-    }
     public void checkPos(GameObject obj1, int turn)
     {
         int pos = obj1.GetComponent<MapButton>().getPosition();
@@ -118,17 +110,54 @@ public class ManagePlayer : MonoBehaviour
             }
         }
 
+        List<GameObject> attacher = new List<GameObject>();
         foreach (GameObject obj2 in players)
         {
             if (pos == obj2.GetComponent<MapButton>().getPosition() && !obj1.Equals(obj2))
             {
                 if (!isAttacher(obj1, obj2))
                 {
+                    countAttach(obj1, attacher);
                     Debug.Log("ATTACH " + obj1.name + " with " + obj2.name + " position: " + pos + obj2.GetComponent<MapButton>().getPosition());
+                    countAttach(obj2, attacher);
                     obj1.GetComponent<MapButton>().attach(obj2);
+                    Debug.Log(obj1.name + " call attach1");
                     obj2.GetComponent<MapButton>().attach(obj1);
+                    Debug.Log(obj2.name + " call attach2");
                 }
             }
+        }
+        setAttachImage(attacher);
+    }
+
+    void countAttach(GameObject obj, List<GameObject> count)
+    {
+        if (!count.Contains(obj))
+            count.Add(obj);
+        foreach (GameObject oj in obj.GetComponent<MapButton>().getAttach())
+        {
+            if (!count.Contains(oj))
+                count.Add(oj);
+        }
+    }
+
+    void setAttachImage(List<GameObject> attacher)
+    {
+        string[] separatingStrings = { "player1_", "player2_" };
+        string type = null;
+        switch (owner)
+        {
+            case 1:
+                type = "boy";
+                break;
+            case 2:
+                type = "girl";
+                break;
+        }
+        foreach (GameObject obj in attacher)
+        {
+            string[] str = obj.name.Split(separatingStrings, System.StringSplitOptions.RemoveEmptyEntries);
+            GameObject.Find(type + "charac" + str[0]).GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(type + attacher.Count);
         }
     }
 
@@ -169,17 +198,36 @@ public class ManagePlayer : MonoBehaviour
     {
         winners.Add(win); 
         players.Remove(win);
+        setImageNull(win);
 
         List<GameObject> att = win.GetComponent<MapButton>().getAttach();
         foreach (GameObject obj in att)
         {
             winners.Add(obj);
             players.Remove(obj);
+            setImageNull(obj);
         }
 
         if (winners.Count == 4)
         {
             Debug.Log("player" + owner + " is WIN!!");
         }
+    }
+
+    void setImageNull(GameObject obj)
+    {
+        string[] separatingStrings = { "player1_", "player2_" };
+        string[] str = obj.name.Split(separatingStrings, System.StringSplitOptions.RemoveEmptyEntries);
+        string type = null;
+        switch (owner)
+        {
+            case 1:
+                type = "boy";
+                break;
+            case 2:
+                type = "girl";
+                break;
+        }
+        GameObject.Find(type + "charac" + str[0]).GetComponent<SpriteRenderer>().sprite = null;
     }
 }

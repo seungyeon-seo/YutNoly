@@ -161,6 +161,14 @@ public class MapButton : MonoBehaviour
         string[] separatingStrings = { "player1_", "player2_" };
         string[] str = gameObject.name.Split(separatingStrings, System.StringSplitOptions.RemoveEmptyEntries);
         Debug.Log(name + count + " image change");
+        /*
+        foreach (GameObject player in attachedPlayer)
+        {
+            Debug.Log("in foreach about " + player.name);
+            string[] obj_num = player.name.Split(separatingStrings, System.StringSplitOptions.RemoveEmptyEntries);
+            GameObject.Find(name + "charac" + obj_num[0]).GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(name + count.ToString());
+            Debug.Log("obj_num[0]: " + obj_num[0]);
+        }*/
         GameObject.Find(name + "charac" + str[0]).GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(name + count.ToString());
     }
 
