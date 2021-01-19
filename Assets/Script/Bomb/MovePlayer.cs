@@ -112,6 +112,7 @@ public class MovePlayer : MonoBehaviour
         if (GameObject.Find("Kan_" + UpdatePos.ToString()).GetComponent<BombCheck>().isBomb)
         {
             // info Text call
+            Debug.Log("BOMB");
             bombed = true;
             setPosition(0);
 
@@ -121,8 +122,12 @@ public class MovePlayer : MonoBehaviour
             UpdatePos = 0;
 
             GameObject.Find("infoText").GetComponent<InfoText>().setImage(3);
+
+            unableKans();
+            resYut.Clear();
             return true;
         }
+        Debug.Log("SAFE");
         return false;
     }
 
@@ -243,6 +248,12 @@ public class MovePlayer : MonoBehaviour
             case 0:
                 if (res == -1)
                     NextPos = CurPos;
+                else
+                    NextPos = CurPos + res;
+                break;
+            case 1:
+                if (res == -1)
+                    NextPos = 29;
                 else
                     NextPos = CurPos + res;
                 break;

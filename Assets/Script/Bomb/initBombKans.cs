@@ -17,13 +17,21 @@ public class initBombKans : MonoBehaviour
             GameObject.Find("show_kan" + i.ToString()).GetComponent<SpriteRenderer>().sprite = null;
             GameObject.Find("bomb" + i.ToString()).GetComponent<SpriteRenderer>().sprite = null;
         }
+        
+        setBombs();
+        
         GameObject.Find("player1").GetComponent<MovePlayer>().initKans(Kans);
         GameObject.Find("player2").GetComponent<MovePlayer>().initKans(Kans);
     }
 
-    // Update is called once per frame
-    void Update()
+    void setBombs()
     {
-        
+        System.Random r = new System.Random();
+        for (int i = 0; i < 5; i++)
+        {
+            int res = r.Next(1, 30);
+            Kans[res].GetComponent<BombCheck>().isBomb = true;
+            GameObject.Find("bomb" + res).GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("bomb");
+        }
     }
 }
