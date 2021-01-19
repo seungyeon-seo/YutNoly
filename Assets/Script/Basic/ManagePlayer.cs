@@ -160,6 +160,7 @@ public class ManagePlayer : MonoBehaviour
         {
             string[] str = obj.name.Split(separatingStrings, System.StringSplitOptions.RemoveEmptyEntries);
             GameObject.Find(type + "charac" + str[0]).GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(type + attacher.Count);
+            // GameObject.Find(type + "charac" + str[0]).GetComponent<SpriteRenderer>().sprite.texture.SetPixel()
         }
     }
 
