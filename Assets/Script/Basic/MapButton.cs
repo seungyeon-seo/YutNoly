@@ -146,7 +146,7 @@ public class MapButton : MonoBehaviour
     public void attach(GameObject obj2)
     {
         attachedPlayer.Add(obj2);
-        int count = attachedPlayer.Count + 1;
+        /*int count = attachedPlayer.Count + 1;
         string name = null;
         switch (owner)
         {
@@ -161,15 +161,15 @@ public class MapButton : MonoBehaviour
         string[] separatingStrings = { "player1_", "player2_" };
         string[] str = gameObject.name.Split(separatingStrings, System.StringSplitOptions.RemoveEmptyEntries);
         Debug.Log(name + count + " image change");
-        /*
+        *//*
         foreach (GameObject player in attachedPlayer)
         {
             Debug.Log("in foreach about " + player.name);
             string[] obj_num = player.name.Split(separatingStrings, System.StringSplitOptions.RemoveEmptyEntries);
             GameObject.Find(name + "charac" + obj_num[0]).GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(name + count.ToString());
             Debug.Log("obj_num[0]: " + obj_num[0]);
-        }*/
-        GameObject.Find(name + "charac" + str[0]).GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(name + count.ToString());
+        }*//*
+        GameObject.Find(name + "charac" + str[0]).GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(name + count.ToString());*/
     }
 
     public int getPosition()
@@ -255,6 +255,12 @@ public class MapButton : MonoBehaviour
             case 0:
                 if (res == -1)
                     NextPos = CurPos;
+                else
+                    NextPos = CurPos + res;
+                break;
+            case 1:
+                if (res == -1)
+                    NextPos = 20;
                 else
                     NextPos = CurPos + res;
                 break;

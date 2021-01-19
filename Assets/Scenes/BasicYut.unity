@@ -810,7 +810,7 @@ GameObject:
   - component: {fileID: 310813159}
   - component: {fileID: 310813161}
   m_Layer: 0
-  m_Name: girl charac
+  m_Name: girlcharac3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1425,7 +1425,7 @@ GameObject:
   - component: {fileID: 458887417}
   - component: {fileID: 458887418}
   m_Layer: 0
-  m_Name: boy charac
+  m_Name: boycharac2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2452,7 +2452,7 @@ GameObject:
   - component: {fileID: 685629746}
   - component: {fileID: 685629745}
   m_Layer: 0
-  m_Name: girl charac
+  m_Name: girlcharac1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3321,7 +3321,7 @@ GameObject:
   - component: {fileID: 818834809}
   - component: {fileID: 818834810}
   m_Layer: 0
-  m_Name: boy charac
+  m_Name: boycharac4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4876,7 +4876,7 @@ GameObject:
   - component: {fileID: 1399538004}
   - component: {fileID: 1399538003}
   m_Layer: 0
-  m_Name: boy charac
+  m_Name: boycharac1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5570,7 +5570,7 @@ GameObject:
   - component: {fileID: 1688592491}
   - component: {fileID: 1688592492}
   m_Layer: 0
-  m_Name: boy charac
+  m_Name: boycharac3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6180,7 +6180,7 @@ GameObject:
   - component: {fileID: 1900793993}
   - component: {fileID: 1900793995}
   m_Layer: 0
-  m_Name: girl charac
+  m_Name: girlcharac4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6380,7 +6380,7 @@ GameObject:
   - component: {fileID: 2028935384}
   - component: {fileID: 2028935386}
   m_Layer: 0
-  m_Name: girl charac
+  m_Name: girlcharac2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
