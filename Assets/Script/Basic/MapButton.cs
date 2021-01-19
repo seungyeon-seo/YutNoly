@@ -56,6 +56,7 @@ public class MapButton : MonoBehaviour
         {
             moveTo();
             PlayerPos = UpdatePos;
+            Debug.Log(gameObject.name + "'s position: " + PlayerPos);
             unableKans();
             checkPos();
             if (resYut.Count == 0)
@@ -97,7 +98,7 @@ public class MapButton : MonoBehaviour
             UpdatePos = Int32.Parse(names[0]);
             checkAttach(UpdatePos);
 
-            // init flags
+            //7 init flags
             if (UpdatePos == 30)
             {
                 GameObject.Find("player" + owner + "_1").GetComponent<ManagePlayer>().AddWinner(gameObject);
@@ -122,6 +123,7 @@ public class MapButton : MonoBehaviour
 
     void checkAttach(int pos)
     {
+        Debug.Log("update attachplayer's position " + attachedPlayer.Count);
         foreach (GameObject obj in attachedPlayer)
         {
             obj.GetComponent<MapButton>().setPosition(pos);
@@ -144,6 +146,22 @@ public class MapButton : MonoBehaviour
     public void attach(GameObject obj2)
     {
         attachedPlayer.Add(obj2);
+        int count = attachedPlayer.Count + 1;
+        string name = null;
+        switch (owner)
+        {
+            case 1:
+                name = "boy";
+                break;
+            case 2:
+                name = "girl";
+                break;
+        }
+
+        string[] separatingStrings = { "player1_", "player2_" };
+        string[] str = gameObject.name.Split(separatingStrings, System.StringSplitOptions.RemoveEmptyEntries);
+        Debug.Log(name + count + " image change");
+        GameObject.Find(name + "charac" + str[0]).GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(name + count.ToString());
     }
 
     public int getPosition()
@@ -176,7 +194,8 @@ public class MapButton : MonoBehaviour
                     resYut.Add((1, Kans[calcNextPos(1)]));
                     break;
                 case 4:
-                    resYut.Add((-1, Kans[calcNextPos(-1)]));
+                    if (PlayerPos != -1)
+                        resYut.Add((-1, Kans[calcNextPos(-1)]));
                     break;
                 case 5:
                 case 6:
@@ -204,7 +223,8 @@ public class MapButton : MonoBehaviour
             }
             Debug.Log("get result from move yut1: " + res + " " + resYut);
         }
-        isReady = true;
+        if (resYut.Count != 0)
+            isReady = true;
     }
 
     void updateResult()
@@ -444,6 +464,17 @@ public class MapButton : MonoBehaviour
     public void clearAttach()
     {
         attachedPlayer.Clear();
+        string[] separatingStrings = { "player1_", "player2_" };
+        string[] str = gameObject.name.Split(separatingStrings, System.StringSplitOptions.RemoveEmptyEntries);
+        switch (owner)
+        {
+            case 1:
+                GameObject.Find("boycharac"+str[0]).GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("new_boy_character");
+                break;
+            case 2:
+                GameObject.Find("girlcharac" + str[0]).GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("new_girl_character");
+                break;
+        }
     }
 
     public List<GameObject> getAttach()

@@ -110,6 +110,7 @@ public class ManagePlayer : MonoBehaviour
         {
             if (pos == obj.GetComponent<MapButton>().getPosition())
             {
+                Debug.Log("catch!");
                 obj.GetComponent<MapButton>().setPosition(-1);
                 clearAttach(obj);
                 obj.GetComponent<MapButton>().catchOther(turn);
@@ -119,16 +120,26 @@ public class ManagePlayer : MonoBehaviour
 
         foreach (GameObject obj2 in players)
         {
-            if (pos == obj2.GetComponent<MapButton>().getPosition())
+            if (pos == obj2.GetComponent<MapButton>().getPosition() && !obj1.Equals(obj2))
             {
-                obj1.GetComponent<MapButton>().attach(obj2);
-                obj2.GetComponent<MapButton>().attach(obj1);
+                if (!isAttacher(obj1, obj2))
+                {
+                    Debug.Log("ATTACH " + obj1.name + " with " + obj2.name + " position: " + pos + obj2.GetComponent<MapButton>().getPosition());
+                    obj1.GetComponent<MapButton>().attach(obj2);
+                    obj2.GetComponent<MapButton>().attach(obj1);
+                }
             }
         }
     }
 
-    public void clearAttach(GameObject obj)
+    bool isAttacher(GameObject obj1, GameObject obj2)
     {
+        return obj1.GetComponent<MapButton>().getAttach().Contains(obj2);
+    }
+
+    void clearAttach(GameObject obj)
+    {
+        Debug.Log("CLEAR");
         List<GameObject> att = obj.GetComponent<MapButton>().getAttach();
         obj.GetComponent<MapButton>().clearAttach();
         foreach (GameObject oj in att)
