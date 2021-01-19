@@ -114,10 +114,13 @@ public class MovePlayer : MonoBehaviour
             // info Text call
             bombed = true;
             setPosition(0);
+
             GameObject.Find("Kan_"+ UpdatePos).GetComponent<BombCheck>().isBomb = false;
-            Debug.Log("remove Bomb" + UpdatePos + " image");
             GameObject.Find("bomb" + UpdatePos).GetComponent<SpriteRenderer>().sprite = null;
+
             UpdatePos = 0;
+
+            GameObject.Find("infoText").GetComponent<InfoText>().setImage(3);
             return true;
         }
         return false;
@@ -147,6 +150,7 @@ public class MovePlayer : MonoBehaviour
             return;
 
         other.GetComponent<MovePlayer>().setPosition(0);
+        GameObject.Find("infoText").GetComponent<InfoText>().setImage(2);
 
         // set res for parameter of callDoOneTurn
         List<int> res = new List<int>();

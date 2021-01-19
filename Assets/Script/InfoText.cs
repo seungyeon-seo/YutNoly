@@ -30,6 +30,9 @@ public class InfoText : MonoBehaviour
             case 2:
                 gameObject.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("catchText");
                 break;
+            case 3:
+                gameObject.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("bombText");
+                break;
         }
     }
 

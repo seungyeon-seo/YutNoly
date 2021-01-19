@@ -81,6 +81,7 @@ public class BombYut1 : MonoBehaviour
     void RotateYut()
     {
         isRotate = true;
+        GameObject.Find("infoText").GetComponent<InfoText>().resetImage();
         GameObject.Find("yut2").GetComponent<Bombyut2>().RotateYut();
         GameObject.Find("yut3").GetComponent<Bombyut3>().RotateYut();
         GameObject.Find("yut4").GetComponent<Bombyut4>().RotateYut();
@@ -102,7 +103,8 @@ public class BombYut1 : MonoBehaviour
             this.gameObject.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("yut2");
         else // 도' 모
             this.gameObject.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("yut1");
-
+        if (res == 15 || res == 16)
+            GameObject.Find("infoText").GetComponent<InfoText>().setImage(1);
     }
     public void callDoOneTurn(int t, List<int> res)
     {
