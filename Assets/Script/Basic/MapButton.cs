@@ -361,8 +361,8 @@ public class MapButton : MonoBehaviour
                     NextPos = 20;
                 else if (res == -1)
                     NextPos = 10;
-                else
-                    NextPos = CurPos + res;
+                else if (res >=3 && res <=4)
+                    NextPos = CurPos + res -1;
                 break;
             case 27: // 제2대각선 2번째 위치
                 if (res == 1)
