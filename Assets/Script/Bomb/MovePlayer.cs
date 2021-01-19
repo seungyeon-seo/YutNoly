@@ -112,7 +112,6 @@ public class MovePlayer : MonoBehaviour
         if (GameObject.Find("Kan_" + UpdatePos.ToString()).GetComponent<BombCheck>().isBomb)
         {
             // info Text call
-            Debug.Log("BOMB");
             bombed = true;
             setPosition(0);
 
@@ -127,7 +126,6 @@ public class MovePlayer : MonoBehaviour
             resYut.Clear();
             return true;
         }
-        Debug.Log("SAFE");
         return false;
     }
 
@@ -196,11 +194,11 @@ public class MovePlayer : MonoBehaviour
                 case 1:
                 case 2:
                 case 3:
-                    //resYut.Add((1, null));
                     resYut.Add((1, Kans[calcNextPos(1)]));
                     break;
                 case 4:
-                    resYut.Add((-1, Kans[calcNextPos(-1)]));
+                    if (PlayerPos != 0)
+                        resYut.Add((-1, Kans[calcNextPos(-1)]));
                     break;
                 case 5:
                 case 6:
@@ -227,7 +225,8 @@ public class MovePlayer : MonoBehaviour
                     break;
             }
         }
-        isReady = true;
+        if (resYut.Count != 0)
+            isReady = true;
     }
     void updateResult()
     {
