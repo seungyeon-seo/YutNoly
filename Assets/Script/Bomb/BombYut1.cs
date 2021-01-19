@@ -5,6 +5,7 @@ using System;
 public class BombYut1 : MonoBehaviour
 {
     public GameObject yut1;
+    GameObject yutResultObj;
     public List<int> resultYut;
     int res = -1;
     float rotSpeed = 20.0f;
@@ -17,6 +18,7 @@ public class BombYut1 : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        yutResultObj = GameObject.Find("yutResult");
         yut1 = gameObject;
         resultYut = new List<int>();
     }
@@ -83,6 +85,7 @@ public class BombYut1 : MonoBehaviour
         GameObject.Find("yut3").GetComponent<Bombyut3>().RotateYut();
         GameObject.Find("yut4").GetComponent<Bombyut4>().RotateYut();
         GameObject.Find("yut5").GetComponent<Bombyut5>().RotateYut();
+        yutResultObj.GetComponent<showResult>().setEmpty();
     }
     void changeImage()
     {
@@ -94,6 +97,7 @@ public class BombYut1 : MonoBehaviour
         GameObject.Find("yut3").GetComponent<Bombyut3>().changeImage(res);
         GameObject.Find("yut4").GetComponent<Bombyut4>().changeImage(res);
         GameObject.Find("yut5").GetComponent<Bombyut5>().changeImage();
+        yutResultObj.GetComponent<showResult>().setImage(res);
         if (res != 16 && res != 4) //도 개 걸 윷
             this.gameObject.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("yut2");
         else // 도' 모
