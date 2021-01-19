@@ -30,6 +30,7 @@ public class ManagePlayer : MonoBehaviour
         players.Add(GameObject.Find("player" + owner + "_3"));
         players.Add(GameObject.Find("player" + owner + "_4"));
 
+        // init variables for win
         winners = new List<GameObject>();
         GameObject.Find("WinView").GetComponent<SpriteRenderer>().sprite = null;
     }

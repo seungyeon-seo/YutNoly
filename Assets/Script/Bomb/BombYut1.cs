@@ -21,6 +21,8 @@ public class BombYut1 : MonoBehaviour
         yutResultObj = GameObject.Find("yutResult");
         yut1 = gameObject;
         resultYut = new List<int>();
+        GameObject.Find("WinView").GetComponent<SpriteRenderer>().sprite = null;
+
     }
     // Update is called once per frame
     void Update()

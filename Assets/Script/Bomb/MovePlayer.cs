@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MovePlayer : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class MovePlayer : MonoBehaviour
     List<GameObject> Kans;
     int UpdatePos = 0;
     Vector2 initPos;
+    int owner;
 
     // Start is called before the first frame update
     void Start()
@@ -25,7 +27,9 @@ public class MovePlayer : MonoBehaviour
         PlayerPos = 0;
         resYut = new List<(int, GameObject)>();
         initPos = gameObject.transform.position;
-        Debug.Log("initPos is " + initPos.ToString());
+        string[] str = { "player" };
+        string[] strs = gameObject.name.Split(str, System.StringSplitOptions.RemoveEmptyEntries);
+        owner = Int32.Parse(strs[0]);
     }
     // Update is called once per frame
     void Update()
@@ -84,6 +88,8 @@ public class MovePlayer : MonoBehaviour
             string[] separatingStrings = { "Kan_" };
             string[] names = moveToKan.name.Split(separatingStrings, System.StringSplitOptions.RemoveEmptyEntries);
             UpdatePos = Int32.Parse(names[0]);
+            if (UpdatePos == 30)
+                showWinView();
 
             // init flags
             isClick = false;
@@ -197,8 +203,10 @@ public class MovePlayer : MonoBehaviour
                     resYut.Add((1, Kans[calcNextPos(1)]));
                     break;
                 case 4:
-                    if (PlayerPos != 0)
+                    if (PlayerPos != 0 || resYut.Count != 0)
                         resYut.Add((-1, Kans[calcNextPos(-1)]));
+                    //else
+                        //GameObject.Find("yut").GetComponent<BombYut1>().setTurnImage2();
                     break;
                 case 5:
                 case 6:
@@ -225,7 +233,7 @@ public class MovePlayer : MonoBehaviour
                     break;
             }
         }
-        if (resYut.Count != 0)
+        if (resYut.Count != 0 || resYut.Count != 0)
             isReady = true;
     }
     void updateResult()
@@ -420,5 +428,19 @@ public class MovePlayer : MonoBehaviour
     public void initKans(List<GameObject> kans)
     {
         Kans = kans;
+    }
+
+    void showWinView()
+    {
+        // image set
+        GameObject.Find("WinView").GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("win" + owner);
+
+        // name set
+        string str;
+        if (owner == 1)
+            str = getBoyName.input;
+        else
+            str = getGirlName.input;
+        GameObject.Find("winuser").GetComponent<Text>().text = str;
     }
 }
