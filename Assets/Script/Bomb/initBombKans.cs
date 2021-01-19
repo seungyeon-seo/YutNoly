@@ -5,6 +5,7 @@ using UnityEngine;
 public class initBombKans : MonoBehaviour
 {
     public List<GameObject> Kans;
+    int Bombflag = 0;
     
     // Start is called before the first frame update
     void Start()
@@ -24,14 +25,29 @@ public class initBombKans : MonoBehaviour
         GameObject.Find("player2").GetComponent<MovePlayer>().initKans(Kans);
     }
 
+    private void Update()
+    {
+        if (Bombflag == 30)
+        {
+            setBombs();
+        }
+    }
+
     void setBombs()
     {
         System.Random r = new System.Random();
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 7; i++)
         {
             int res = r.Next(1, 30);
-            Kans[res].GetComponent<BombCheck>().isBomb = true;
+            Kans[res].GetComponent<BombCheck>().setIsBomb(true);
+            Debug.Log(Kans[res].name + " is set");
+            // Kans[res].GetComponent<BombCheck>().isBomb = true;
             GameObject.Find("bomb" + res).GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("bomb");
         }
+    }
+
+    public void increment()
+    {
+        Bombflag++;
     }
 }
