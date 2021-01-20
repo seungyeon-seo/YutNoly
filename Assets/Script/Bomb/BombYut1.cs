@@ -94,7 +94,6 @@ public class BombYut1 : MonoBehaviour
         // calc result
         System.Random r = new System.Random();
         res = r.Next(1, 17);
-        res = 3;
         GameObject.Find("yut2").GetComponent<Bombyut2>().changeImage(res);
         GameObject.Find("yut3").GetComponent<Bombyut3>().changeImage(res);
         GameObject.Find("yut4").GetComponent<Bombyut4>().changeImage(res);
