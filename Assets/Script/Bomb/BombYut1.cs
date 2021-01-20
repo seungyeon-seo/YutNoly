@@ -14,6 +14,7 @@ public class BombYut1 : MonoBehaviour
     bool doneTurn = false;
     float t = 0;
     int turn = 1;
+    private bool isSet;
 
     // Start is called before the first frame update
     void Start()
@@ -74,9 +75,6 @@ public class BombYut1 : MonoBehaviour
                 GameObject.Find("player2").GetComponent<MovePlayer>().getResult(resultYut);
                 turn = 1;
                 break;
-            default:
-                Debug.LogError("Wrong Turn");
-                break;
         }
         resultYut.Clear();
     }
@@ -96,6 +94,7 @@ public class BombYut1 : MonoBehaviour
         // calc result
         System.Random r = new System.Random();
         res = r.Next(1, 17);
+        res = 3;
         GameObject.Find("yut2").GetComponent<Bombyut2>().changeImage(res);
         GameObject.Find("yut3").GetComponent<Bombyut3>().changeImage(res);
         GameObject.Find("yut4").GetComponent<Bombyut4>().changeImage(res);

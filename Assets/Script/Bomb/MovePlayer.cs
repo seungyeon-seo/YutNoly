@@ -53,7 +53,6 @@ public class MovePlayer : MonoBehaviour
             PlayerPos = UpdatePos;
             Debug.Log("before unableKans, resYut count: " + resYut.Count);
             unableKans();
-            checkPos();
             if (resYut.Count == 0)
             {
                 isReady = false;
@@ -207,7 +206,7 @@ public class MovePlayer : MonoBehaviour
                     if (PlayerPos != 0 || resYut.Count != 0)
                         resYut.Add((-1, Kans[calcNextPos(-1)]));
                     else
-                        GameObject.Find("yut").GetComponent<BombYut1>().setTurnImage2();
+                        resYut.Add((1, Kans[calcNextPos(1)]));
                     break;
                 case 5:
                 case 6:
@@ -234,7 +233,7 @@ public class MovePlayer : MonoBehaviour
                     break;
             }
         }
-        if (resYut.Count != 0 || resYut.Count != 0)
+        //if (resYut.Count != 0 || resYut.Count != 0)
             isReady = true;
     }
     void updateResult()
@@ -255,7 +254,7 @@ public class MovePlayer : MonoBehaviour
         {
             case 0:
                 if (res == -1)
-                    NextPos = CurPos;
+                    NextPos = -1;
                 else
                     NextPos = CurPos + res;
                 break;
