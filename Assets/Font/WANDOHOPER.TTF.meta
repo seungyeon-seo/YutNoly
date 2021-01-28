@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: 4a34f31aa6a66694488bce1ebdf018dd
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Wandohope
+  fontNames:
+  - Wandohope
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: c9cf668db6fd06f4ea8b5cd3e37e8b9a, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
